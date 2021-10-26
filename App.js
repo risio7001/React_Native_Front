@@ -1,13 +1,50 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+
+
+const HomeScreen = () => {
+  return<>
+    <ScrollView>
+      <View>
+        <Text>
+          tab Test 1
+        </Text>
+      </View>
+    </ScrollView>
+  </>
+}
+
+const SubScreen = () => {
+  return<>
+    <ScrollView>
+      <View>
+        <Text>
+          tab Test 2
+        </Text>
+      </View>
+    </ScrollView>
+  </>
+}
+
+
+const Tabs = () => {
+  return<>
+    <Tab.Navigator>
+      <Tab.Screen name="home" component={HomeScreen}/>
+      <Tab.Screen name="sub" component={SubScreen}/>
+    </Tab.Navigator>
+  </>
+}
 
 export default function App() {
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tabs/>
+    </NavigationContainer>
   );
 }
 
