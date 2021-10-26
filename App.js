@@ -1,58 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
-
-const HomeScreen = () => {
-  return<>
-    <ScrollView>
-      <View>
-        <Text>
-          tab Test 1
-        </Text>
-      </View>
-    </ScrollView>
-  </>
-}
-
-const SubScreen = () => {
-  return<>
-    <ScrollView>
-      <View>
-        <Text>
-          tab Test 2
-        </Text>
-      </View>
-    </ScrollView>
-  </>
-}
-
-
-const Tabs = () => {
-  return<>
-    <Tab.Navigator>
-      <Tab.Screen name="home" component={HomeScreen}/>
-      <Tab.Screen name="sub" component={SubScreen}/>
-    </Tab.Navigator>
-  </>
-}
+import TabRouter from './router/TabRouter';
+import Constants from 'expo-constants';
 
 export default function App() {
 
-
   return (
     <NavigationContainer>
-      <Tabs/>
+      <SafeAreaView style={{ paddingTop: Constants.statusBarHeight }} />
+      <TabRouter />
     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   screen: {
+//     paddingTop:Constants.statusBarHeight
+//   },
+// });
