@@ -15,8 +15,8 @@ export default function App() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   screen: {
-//     paddingTop:Constants.statusBarHeight
-//   },
-// });
+const styles = StyleSheet.create({
+  screen: {
+    paddingTop:Constants.statusBarHeight
+  },
+});
