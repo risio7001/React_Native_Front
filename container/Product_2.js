@@ -32,7 +32,7 @@ const Product_2 = ({navigation}) => {
     let guid = route.params.Uid;
 
     const getDetailData = () => {
-        console.log(guid);
+        // console.log(guid);
         var userid = 'flroad';
         fetch(`${db.detail}${guid}?userid=${userid}`,{
             headers:{
@@ -158,7 +158,7 @@ const Product_2 = ({navigation}) => {
                                             </View>
                                             <View>
                                                 <Text style={{ color: 'grey' }}>
-                                                    {review.content}
+                                                    {review.Content}
                                                 </Text>
                                             </View>
                                         </View>

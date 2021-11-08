@@ -9,6 +9,9 @@ import Product_1 from '../container/Product_1';
 import Product_2 from '../container/Product_2';
 import { StyleSheet } from 'react-native';
 import MainPage from '../container/MainPage';
+import Login from '../container/Login';
+import SignUp_Terms from '../container/SignUp_Terms';
+import SignUp from '../container/SignUp';
 
 const TabRouter = () => {
 
@@ -18,10 +21,15 @@ const TabRouter = () => {
     const StackNavi = () => {
         return <>
             <Stack.Navigator screenOptions={{
-                headerShown:false,
+                headerShown: false,
             }}>
-                <Stack.Screen name="product1" component={Product_1}/>
-                <Stack.Screen name="product2" component={Product_2}/>
+                <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="product0" component={MainPage} />
+                <Stack.Screen name="product1" component={Product_1} />
+                <Stack.Screen name="product2" component={Product_2} />
+                <Stack.Screen name="signUpTerms" component={SignUp_Terms} />
+                <Stack.Screen name="signUpInput" component={SignUp}/>
+                
             </Stack.Navigator>
         </>
     }
@@ -34,12 +42,13 @@ const TabRouter = () => {
                 tabBarInactiveBackgroundColor:'black',
                 tabBarActiveBackgroundColor:'black',
                 }}>
-            <Tab.Screen name="Home" component={MainPage} options={{
-                tabBarLabelStyle:styles.tabLabel,
-                tabBarIcon:({size})=>{
-                    size=0
+
+            <Tab.Screen name="Home" component={StackNavi} options={{
+                tabBarLabelStyle: styles.tabLabel,
+                tabBarIcon: ({ size }) => {
+                    size = 0
                 }
-            }}/>
+            }} />
             <Tab.Screen name="수주관리" component={Product_In} options={{
                 tabBarLabelStyle:styles.tabLabel,
                 tabBarIcon:({size})=>{
@@ -59,13 +68,6 @@ const TabRouter = () => {
                 }
             }} />
             <Tab.Screen name="더보기.." component={Product_More} options={{
-                tabBarLabelStyle: styles.tabLabel,
-                tabBarIcon: ({ size }) => {
-                    size = 0
-                }
-            }} />
-
-            <Tab.Screen name="test" component={StackNavi} options={{
                 tabBarLabelStyle: styles.tabLabel,
                 tabBarIcon: ({ size }) => {
                     size = 0

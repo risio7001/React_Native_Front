@@ -1,1 +1,3 @@
 ReactNativeCLI -> expo
+
+expo start

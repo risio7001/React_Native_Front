@@ -5,9 +5,11 @@ import Arrow from '../img/arrow.svg';
 import NumberFormat from 'react-number-format';
 import db from '../config.json';
 import ping from '../img/ping.png';
+import { useRoute } from '@react-navigation/native';
 
 const Product_1 = ({navigation, route}) => {
-
+    const getRoute = useRoute();
+    let getParams = getRoute.params
     const flatListRef = React.useRef();
 
     const goDetail = (e) => {
@@ -33,7 +35,7 @@ const Product_1 = ({navigation, route}) => {
         var cate = 63164;
         var adcode = 1130510200;
         var userid = 'flroad';
-        let url = db.db + cate + '/' + adcode + '/' + select_fliter + '?page=' + testStack + '&userid=' + userid;
+        let url = db.db + getParams.cate + '/' + adcode + '/' + select_fliter + '?page=' + testStack + '&userid=' + userid;
         try {
             const response = await fetch(url, {
                 headers: {
@@ -60,6 +62,7 @@ const Product_1 = ({navigation, route}) => {
                                 <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'grey' }}>{items.Title}{"\n"}</Text>
                                 <NumberFormat value={items.Price} displayType={'text'} thousandSeparator={true} suffix={'원'} renderText={pay => <Text style={{ fontWeight: 'bold', fontSize: 13, color: 'black' }}>{pay}{"\n"}</Text>} />
                                 <Text style={{ fontWeight: 'bold', fontSize: 12, color: 'grey' }}>상품코드 : {items.GoodsCode}{"\n"}</Text>
+                                {/* 배송사진 쿼리수정 필요 211103 */}
                                 <Text style={{ fontWeight: 'normal', fontSize: 12, color: 'grey' }}>리뷰 {items.userCnt} 배송사진 {items.photoCnt}</Text>
                             </Text>
                         </View>
@@ -74,11 +77,11 @@ const Product_1 = ({navigation, route}) => {
         
         <View style={{ width: deviceWidth, height: (deviceHeight * 0.08), backgroundColor: "black", flexDirection: "row", justifyContent: "center" }}>
             <View style={{ width: (deviceWidth * 0.95), height: '100%', flexDirection: 'row' }}>
-                <View style={{ flex: 1, transform: [{ rotate: '180deg' }], justifyContent: 'center' }}>
+                <Pressable onPress={()=>navigation.goBack()} style={{ flex: 1, transform: [{ rotate: '180deg' }], justifyContent: 'center' }}>
                     <LocalSvg asset={Arrow} width={25} height={25} fill={"#ffffff"} />
-                </View>
+                </Pressable>
                 <View style={{ flex: 10, flexDirection: "column", justifyContent: 'center' }}>
-                    <Text style={{ textAlign: 'center', fontSize: 20, color: "white" }}>축하화환</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 20, color: "white" }}>{getParams.name}</Text>
                 </View>
                 <View style={{ flex: 1 }}></View>
             </View>

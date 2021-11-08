@@ -59,34 +59,11 @@ const Product_Review = () => {
     }
     
     return<>
-        <ScrollView>
-            <Text>
-                테스트용 화면 입니다.
-            </Text>
-            <Pressable onPress={()=>getData()} style={{width:Dimensions.get('window').width, height:Dimensions.get('window').height*0.1, borderWidth:1}}>
-                <Text>
-                    push
-                </Text>
-            </Pressable>
-            <Pressable onPress={()=>getData('fav')} style={{width:Dimensions.get('window').width, height:Dimensions.get('window').height*0.1, borderWidth:1}}>
-                <Text>
-                    push22
-                </Text>
-            </Pressable>
-            <View>
-                <Text>
-                    {
-                        data === undefined ? '' : 
-                        data.map((items, index) => (
-                            <Text key={index}>
-                                {items.Title}{"\n"}
-                            </Text>
-                        ))
-                    }
-                </Text>
-            </View>
-
-        </ScrollView>
+    <ScrollView>
+        <Text>
+            Product_Review
+        </Text>
+    </ScrollView>
     </>
 }
 export default Product_Review
