@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, Text, View, Dimensions } from 'react-native';
+import { ScrollView, Text, View, Dimensions, Pressable } from 'react-native';
 import LocalSvg from 'react-native-svg/src/LocalSvg';
 import Arrow from '../img/arrow.svg';
 
@@ -20,12 +20,13 @@ const Product_In = () => {
                 <View style={{ flex: 1 }}></View>
             </View>
         </View>
-        <View style={{width:deviceWidth, height:deviceHeight*0.06, backgroundColor:'red', flexDirection:'row', justifyContent:'space-around'}}>
-            <Text style={{backgroundColor:'blue', flex:1}}>접수대기</Text>
-            <Text style={{backgroundColor:'red', flex:1}}>입금확인중</Text>
-            <Text style={{backgroundColor:'black', flex:1}}>처리중</Text>
-            <Text style={{backgroundColor:'grey', flex:1}}>완료</Text>
-            <Text style={{backgroundColor:'blue', flex:1}}>취소 내역</Text>
+        <View style={{ width: deviceWidth, height: deviceHeight * 0.06, backgroundColor: 'black', flexDirection: 'row' }}>
+            <View style={{ }}>
+                <Pressable style={{ justifyContent: 'center', flex: 1 }}><Text style={{ alignSelf: 'center', color: 'white' }}>접수대기</Text></Pressable>
+                <Pressable style={{ justifyContent: 'center', flex: 1 }}><Text style={{ alignSelf: 'center', color: 'white' }}>처리중</Text></Pressable>
+                <Pressable style={{ justifyContent: 'center', flex: 1 }}><Text style={{ alignSelf: 'center', color: 'white' }}>완료</Text></Pressable>
+            </View>
+
         </View>
         <View>
             <Text>

@@ -32,7 +32,6 @@ const Product_1 = ({navigation, route}) => {
     const [data, setData] = React.useState();
 
     const getData = async () => {
-        var cate = 63164;
         var adcode = 1130510200;
         var userid = 'flroad';
         let url = db.db + getParams.cate + '/' + adcode + '/' + select_fliter + '?page=' + testStack + '&userid=' + userid;

@@ -12,6 +12,10 @@ import MainPage from '../container/MainPage';
 import Login from '../container/Login';
 import SignUp_Terms from '../container/SignUp_Terms';
 import SignUp from '../container/SignUp';
+import * as ImagePicker from 'expo-image-picker';
+import IdHelp from '../container/IdHelp';
+import PassHelp from '../container/PassHelp';
+
 
 const TabRouter = () => {
 
@@ -23,12 +27,12 @@ const TabRouter = () => {
             <Stack.Navigator screenOptions={{
                 headerShown: false,
             }}>
-                <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="login" component={SignUp} />
                 <Stack.Screen name="product0" component={MainPage} />
                 <Stack.Screen name="product1" component={Product_1} />
                 <Stack.Screen name="product2" component={Product_2} />
-                <Stack.Screen name="signUpTerms" component={SignUp_Terms} />
-                <Stack.Screen name="signUpInput" component={SignUp}/>
+                <Stack.Screen name="signUpTerms" component={SignUp} />
+                <Stack.Screen name="signUpInput" component={Login}/>
                 
             </Stack.Navigator>
         </>
@@ -51,7 +55,7 @@ const TabRouter = () => {
             }} />
             <Tab.Screen name="수주관리" component={Product_In} options={{
                 tabBarLabelStyle:styles.tabLabel,
-                tabBarIcon:({size})=>{
+                tabBarIcon:({size})=>{ 
                     size=0
                 }
             }}/>
