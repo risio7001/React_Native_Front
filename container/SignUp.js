@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Pressable, ScrollView, TextInput, Modal, Image, ImageBackground } from 'react-native';
+import { View, Text, Pressable, ScrollView, TextInput, Modal } from 'react-native';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
 import Arrow2 from '../img/arrow2.svg';
@@ -10,38 +10,72 @@ import Postcode from '@actbase/react-daum-postcode';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
-
+// import { uuid } from '../utils/secretKey';
+import config from '../config.json';
+// import * as Analytics from 'expo-firebase-analytics';
 
 const SignUp = ({ navigation }) => {
     const [color, setColor] = React.useState(false);
     const [emailDI, setEmailDI] = React.useState(false);
     const [isModal, setIsModal] = React.useState(false);
-    const [address, setAddress] = React.useState();
-    const [address2, setAddress2] = React.useState();
-    const [id, setId] = React.useState();
-    const [biz, setBiz] = React.useState();
-    const [email, setEmail] = React.useState();
-    const [email2, setEmail2] = React.useState();
-    const [idCheck, setIdCheck] = React.useState(false);
-    const [bizNoCheck, setBizNoCheck] = React.useState(false);
-    const [emailCheck, setEmailCheck] = React.useState(false);
-    const [password, setPassword] = React.useState();
-    const [password2, setPassword2] = React.useState();
-    const [passwordCheck, setPasswordCheck] = React.useState(false);
-    const [imgPath, setImgPath] = React.useState();
+
+    const [address, setAddress] = React.useState();  // 주소
+    const [address2, setAddress2] = React.useState(); // 상세주소
+    const [addrLat , setAddrLat] = React.useState(); // 경도
+    const [addrLng , setAddrLng] = React.useState(); // 위도
+    const [post, setPost] = React.useState();  // 우편번호
+    const [id, setId] = React.useState();   // 아이디
+    const [bizNo, setBizNo] = React.useState(); // 사업자번호
+    const [email, setEmail] = React.useState(); // 이메일
+    const [email2, setEmail2] = React.useState(); // 이메일 도메인
+    const [email3, setEmail3] = React.useState();
+    const [dealerName, setDealerName] = React.useState(); // 업체명
+    const [channel, setChannel] = React.useState(); // 가입경로
+    const [chName, setChName] = React.useState();  // 대표자 명
+    const [mobile1, setMobile1] = React.useState();  //핸드폰
+    const [mobile2, setMobile2] = React.useState();  // 핸드폰2
+    const [mobile3, setMobile3] = React.useState();  // 핸드폰3
+    const [tel1, setTel1] = React.useState();  // 전화번호
+    const [tel2, setTel2] = React.useState();  // 전화번호2
+    const [tel3, setTel3] = React.useState();  // 전화번호3
+    const [fax, setFax] = React.useState();  // 팩스번호
+    const [dealerEtc5, setDealerEtc5] = React.useState(); // 판매자 매장설명
+    const [dealerEtc1, setDealerEtc1] = React.useState();  // 통신 판매 번호
+    const [dealerEtc2, setDealerEtc2] = React.useState();  // 전문분야
+    const [recMember, setRecMember] = React.useState();  //유치 가맹점 아이디
+    const [bank, setBank] = React.useState();  // 은행명
+    const [account, setAccount] = React.useState();  //계좌번호
+    const [depositor, setDepositor] = React.useState();  // 입금주명
+    
+    const [idCheck, setIdCheck] = React.useState(false); // 아이디 중복확인
+    const [bizNoCheck, setBizNoCheck] = React.useState(false); // 사업자등록번호 중복 확인
+    const [addrCheck, setAddrCheck] = React.useState(false);
+    
+    const [emailCheck, setEmailCheck] = React.useState(false);  // 이메일 중복 확인
+    const [password, setPassword] = React.useState();  // 비밀번호 
+    const [password2, setPassword2] = React.useState(); // 비밀번호 재입력
+    const [passwordCheck, setPasswordCheck] = React.useState(false);  // 비밀번호 조건확인
+    const [bizImg, setBizImg] = React.useState();
+    const [shopImg, setShopImg] = React.useState();
+
     const [deps_target, setDeps_target] = React.useState(); // 타겟 저장
-    const [deps_1, setDeps_1] = React.useState(); // 받아온 데이터 저장
-    const [deps_2, setDeps_2] = React.useState(); // 받아온 데이터 저장
-    const [deps_3, setDeps_3] = React.useState(); // 받아온 데이터 저장
+    const [deps_1, setDeps_1] = React.useState(); // 받아온 1차 주소 데이터 저장
+    const [deps_2, setDeps_2] = React.useState(); // 받아온 2차 주소 데이터 저장
+    const [deps_3, setDeps_3] = React.useState(); // 받아온 3차 주소 데이터 저장
     const [cortarNo, setCortarNo] = React.useState(""); // 하위 행정구역 코드 저장
-    const [deps_stack, setDeps_stack] = React.useState();
-    const [deps_stack2, setDeps_stack2] = React.useState();
-    const [select, setSelect] = React.useState(1);
-    const [select2, setSelect2] = React.useState(1);
-    const [dongStack, setdongStack] = React.useState([]);
+    const [deps_stack, setDeps_stack] = React.useState();  // 주소 1차
+    const [deps_stack2, setDeps_stack2] = React.useState();  // 주소 2차
+    const [select, setSelect] = React.useState(1);  // 1차 주소지 선택
+    const [select2, setSelect2] = React.useState(1);  // 2차 주소지 선택
+    const [dongStack, setdongStack] = React.useState([]);  // 3차 주소지 저장
 
-    const [totalStack, setTotalStack] = React.useState();
+    const [totalStack, setTotalStack] = React.useState();  // 배송지 추가하기 버튼 클릭 시 저장되는 곳
 
+
+    // React.useEffect(()=>{
+    //     const secureKey = uuid();
+    //     // console.log(secureKey);
+    // },[]);
 
     React.useEffect(() => {
         getMap();
@@ -62,7 +96,7 @@ const SignUp = ({ navigation }) => {
                         json.Region.forEach((element, index) => {
                             minData.push({
                                 "name": element.cortar_nm,
-                                "index": index,
+                                "code": element.cortar_no,
                                 "select": 'red'
                             });
                         });
@@ -74,10 +108,18 @@ const SignUp = ({ navigation }) => {
             })
             .catch((err) => console.log(err))
     }
+    const [regexPWCheck, setRegexPWCheck] = React.useState(false);
+    const [regexIDCheck, setRegexIDCheck] = React.useState(false);
+    const regexPW = /(?=.*[a-zA-Z])(?=.*[0-9]).{7,15}$/;
+    const regexID = /[a-z0-9].{7,15}$/;
 
     React.useEffect(() => {
-
+        // console.log("정규식 테스트 : " + regex.test(password));
+        setRegexPWCheck(regexPW.test(password));
         if (password === undefined || password === "") {
+            setPasswordCheck(false);
+        }
+        else if(!regexPWCheck){
             setPasswordCheck(false);
         }
         else {
@@ -91,7 +133,18 @@ const SignUp = ({ navigation }) => {
 
     }, [password2, password]);
 
-    const Check = async () => {
+    const CheckId = async () => {
+
+        setRegexIDCheck(regexID.test(id));
+
+        console.log()
+
+        if(id === "" || id === undefined){
+            return alert("아이디를 적어해주세요");
+        }
+        else if(!regexIDCheck){
+           return alert('아이디는 영문 + 숫자 조합으로 작성해 주세요');
+        }
         try {
             const response = await axios({
                 headers: {
@@ -143,6 +196,16 @@ const SignUp = ({ navigation }) => {
         }
     }
     const CheckEmail = async () =>{
+        if(email === "" || email === undefined){
+            return alert("이메일을 적어주세요");
+        }
+        else if(email2 === "" || email2 === undefined){
+            return alert("이메일을 확인해주세요");
+        }
+        // else if(){
+
+        // }
+    
         try {
             const response = await axios({
                 headers: {
@@ -157,6 +220,7 @@ const SignUp = ({ navigation }) => {
             })
             if (response.data.recordset.length === 0) {
                 setEmailCheck(true);
+                setEmail3(email)
                 return alert("사용하실 수 있는 이메일입니다.");
             }
             else {
@@ -168,7 +232,7 @@ const SignUp = ({ navigation }) => {
         }
     }
 
-    const _pickImage = async () => {
+    const _pickImage = async (division) => {
 
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -177,53 +241,103 @@ const SignUp = ({ navigation }) => {
             aspect: [4, 3],
         });
         if (!result.cancelled) {
-            console.log(result);
-            return setImgPath(result.uri);
+            if(division === "biz"){
+                return setBizImg(result);
+            }
+            else{
+                return setShopImg(result);
+            }
         }
         else {
             return alert("취소 되었습니다.");
         }
     };
-
-    const putData = () => {
-    }
-    // React.useEffect(()=>{
-    //     dongColor = totalStack;
-    //     console.log(dongColor);
-    // },[totalStack]);
-
+    React.useEffect( async () => {
+        // console.log(address);
+        try{
+            const result = await axios({
+                method: 'get',
+                url: `https://dapi.kakao.com//v2/local/search/address.json?query=${address}`,
+                headers: { 'Authorization': 'KakaoAK ' + config.REST_API_KEY }
+            })
+                .then((response)=>{
+                    setAddrLat(JSON.stringify(response.data.documents[0].x));
+                    setAddrLng(JSON.stringify(response.data.documents[0].y));
+                })
+                .catch((err)=>{
+                    // console.log(err);
+                });
+        }catch(err){
+            return console.log(err);
+        }
+        
+    },[address]);
+    
+    
     let smallData = [];
     let totalDong = [];
-
     let data = [];
-    // React.useEffect(()=>{
-    // },[dongStack]);
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
 
-    },[color]);
-    const submitSignUp = async () =>{
+    }, [color]);
+    const submitSignUp = async () => {
+        // const secureKey = uuid(); // 시크릿키 발급
+        
+        let mobile = mobile1 + "-" + mobile2 + "-" + mobile3;
+        let mail = email + "@" + email2
+        let tel = tel1 + "-" + tel2 + "-" + tel3
 
         const fb = new FormData();
-        fd.append('userid',)
+    //     fb.append('file', {
+    //         name: bizImg.uri.substr(bizImg.uri.lastIndexOf('/') + 1),
+    //         type: bizImg.type,
+    //         uri: bizImg.uri
+    //     });
+    //    fb.append('file', {
+    //         name: shopImg.uri.substr(shopImg.uri.lastIndexOf('/') + 1),
+    //         type: shopImg.type,
+    //         uri: shopImg.uri
+    //     });
 
+        fb.append('dealerName', dealerName);  // 상호명
+        fb.append('chName', chName); // 대표자 명
+        fb.append('id', id);
+        fb.append('pwd', password);
+        fb.append('mobile', mobile);
+        fb.append('email', mail);
+        fb.append('tel', tel);
+        fb.append('bizNo', bizNo);
+        fb.append('fax',fax);
+        fb.append('dealerEtc1',dealerEtc1); //  통신판매번호
+        fb.append('post',post);  // 우편번호
+        fb.append('addr',address);
+        fb.append('addrDetail',address2);
+        fb.append('addrLat',addrLat); // 위도
+        fb.append('addrLng',addrLng); // 경도
+        fb.append('dealerEtc2',dealerEtc2); // 전문분야
+        fb.append('bank',bank);
+        fb.append('account',account);
+        fb.append('depositor',depositor); //예금주
+        fb.append('recMember',recMember); //유치가맹점
+        fb.append('raddr',JSON.stringify(totalStack)); // 배송지 배열 통째로
+        fb.append('dealerEtc5',dealerEtc5); // 판매자 매장 설명
+        fb.append('channel',channel); // 가입경로
+        
         try{
             const response = await axios({
-                headers:{
-                    'Accept':'application/json',
-                    "Content-Type": "multipart/form-data",
-                },
-                url:'http://183.111.163.172:8080/sun/sun/signUp',
+                url:'http://localhost:5000/sun/sun/testsignup', //테스트용 
+                // url:'http://183.111.166.172:8080/sun/sun/testsignup',
                 method:'post',
                 data:fb
             })
-            console.log(response.data.recordset);
-            
+            return alert('가입신청이 완료 되었습니다.\n본사 승인시 이용이 가능합니다.')
+            // console.log('완료');
         }catch(err){
-
+            console.log(err);
         }
     }
-
+    
     return <>
         <ScrollView>
             <View style={{ width: D_Width, height: (D_Height * 0.08), backgroundColor: "black", flexDirection: "row", justifyContent: "center" }}>
@@ -252,7 +366,7 @@ const SignUp = ({ navigation }) => {
                             onChangeText={setId}
                         />
                         <View style={{ flex: 1, backgroundColor: 'rgb(178,171,154)', height: '60%', alignSelf: 'center', justifyContent: 'center', marginLeft: 5 }}>
-                            <Text onPress={() => Check()} style={{ textAlign: 'center', justifyContent: 'center', color: 'white' }}>중복확인</Text>
+                            <Text onPress={() => CheckId()} style={{ textAlign: 'center', justifyContent: 'center', color: 'white' }}>중복확인</Text>
                         </View>
                     </View>
                 </View>
@@ -266,6 +380,9 @@ const SignUp = ({ navigation }) => {
                             borderWidth={1}
                             onChangeText={setPassword}
                             secureTextEntry={true}
+                            fontSize={11}
+                            placeholder="4~15자 영문과 숫자(또는 영문 숫자 특수문자) 조합"
+                            placeholderTextColor="red"
                         />
                     </View>
                 </View>
@@ -278,6 +395,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: passwordCheck ? 'green' : 'red' }}
                             placeholder="비밀번호 재입력"
                             borderWidth={1}
+                            fontSize={11}
                             onChangeText={setPassword2}
                             secureTextEntry={true}
                         />
@@ -292,6 +410,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             placeholder="사업자등록증 상의 업체명"
                             borderWidth={1}
+                            onChangeText={setDealerName}
                         />
                     </View>
                 </View>
@@ -304,6 +423,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             placeholder="사업자등록증에 표시된 대표자명"
                             borderWidth={1}
+                            onChangeText={setChName}
                         />
                     </View>
                 </View>
@@ -315,12 +435,25 @@ const SignUp = ({ navigation }) => {
                         </View>
                         <TextInput style={{ flex: 1, height: '60%', alignSelf: 'center', marginHorizontal: 5, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
+                            maxLength={3}
+                            returnKeyType='done'
+                            keyboardType='number-pad'
+                            type={Number}
+                            onChangeText={setMobile1}
                         />
                         <TextInput style={{ flex: 1, height: '60%', alignSelf: 'center', marginHorizontal: 5, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
+                            maxLength={4}
+                            returnKeyType='done'
+                            keyboardType='number-pad'
+                            onChangeText={setMobile2}
                         />
                         <TextInput style={{ flex: 1, height: '60%', alignSelf: 'center', marginHorizontal: 5, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
+                            maxLength={4}
+                            returnKeyType='done'
+                            keyboardType='number-pad'
+                            onChangeText={setMobile3}
                         />
                     </View>
                 </View>
@@ -332,12 +465,24 @@ const SignUp = ({ navigation }) => {
                         </View>
                         <TextInput style={{ flex: 1, height: '60%', alignSelf: 'center', marginHorizontal: 5, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
+                            maxLength={3}
+                            returnKeyType='done'
+                            keyboardType='number-pad'
+                            onChangeText={setTel1}
                         />
                         <TextInput style={{ flex: 1, height: '60%', alignSelf: 'center', marginHorizontal: 5, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
+                            maxLength={4}
+                            returnKeyType='done'
+                            keyboardType='number-pad'
+                            onChangeText={setTel2}
                         />
                         <TextInput style={{ flex: 1, height: '60%', alignSelf: 'center', marginHorizontal: 5, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
+                            maxLength={4}
+                            returnKeyType='done'
+                            keyboardType='number-pad'
+                            onChangeText={setTel3}
                         />
                     </View>
                 </View>
@@ -349,6 +494,9 @@ const SignUp = ({ navigation }) => {
                         </View>
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
+                            keyboardType='number-pad'
+                            returnKeyType='done'
+                            onChangeText={setFax}
                         />
                     </View>
                 </View>
@@ -372,7 +520,7 @@ const SignUp = ({ navigation }) => {
                                 <SelectDropdown
                                     data={addr}
                                     onSelect={(selectedItem, index) => {
-                                        console.log(index);
+                                        // console.log(index);
                                         if (index == 0) {
                                             setEmailDI(true)
                                         }
@@ -401,7 +549,7 @@ const SignUp = ({ navigation }) => {
                         </View>
                         <TextInput style={{ flex: 2, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
-                            onChangeText = {setBiz}
+                            onChangeText = {setBizNo}
                             placeholder="-를 제외하고 입력해주세요"
                         />
                         <View style={{ flex: 1, backgroundColor: 'rgb(178,171,154)', height: '60%', alignSelf: 'center', justifyContent: 'center', marginLeft: 5 }}>
@@ -415,10 +563,10 @@ const SignUp = ({ navigation }) => {
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <Text style={{ alignSelf: 'center', fontSize: 12 }}>사업자등록증첨부</Text>
                         </View>
-                        <Pressable onPress={() => _pickImage()} style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
+                        <Pressable onPress={() => _pickImage("biz")} style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
                         >
-                            <Text>{imgPath === undefined ? "" : imgPath}</Text>
+                            <Text>{bizImg === undefined ? "" : bizImg.uri}</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -428,9 +576,11 @@ const SignUp = ({ navigation }) => {
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             <Text style={{ alignSelf: 'center', fontSize: 12 }}>판매자 매장홍보 사진</Text>
                         </View>
-                        <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
+                        <Pressable onPress={() => _pickImage("shop")} style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
-                        />
+                        >
+                            <Text>{shopImg === undefined ? "" : shopImg.uri}</Text>
+                        </Pressable>
                     </View>
                 </View>
 
@@ -442,6 +592,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
                             placeholder="판매자 매장 설명"
+                            onChangeText={setDealerEtc5}
                         />
                     </View>
                 </View>
@@ -454,6 +605,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
                             placeholder="통신판매번호"
+                            onChangeText={setDealerEtc1}
                         />
                     </View>
                 </View>
@@ -466,6 +618,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
                             placeholder="유치가맹점아이디"
+                            onChangeText={setRecMember}
                         />
                     </View>
                 </View>
@@ -486,6 +639,8 @@ const SignUp = ({ navigation }) => {
                                 style={{ flex: 3, paddingTop: Constants.statusBarHeight }}
                                 jsOptions={{ animation: true }}
                                 onSelected={data => {
+                                    // console.log(data);
+                                    setPost(data.zonecode);
                                     setAddress(data.address)
                                     setIsModal(false);
                                 }}
@@ -513,7 +668,8 @@ const SignUp = ({ navigation }) => {
                         <SelectDropdown
                             data={signUpPath}
                             onSelect={(selectedItem3, index) => {
-                                console.log(selectedItem3)
+                                // console.log(selectedItem3)
+                                setChannel(selectedItem3);
                             }}
                             buttonStyle={{ flex: 3, justifyContent: 'center', alignSelf: 'center', borderWidth: 1, borderColor: 'rgb(209,209,211)' }}
                             buttonTextStyle={{ fontSize: 15 }}
@@ -539,7 +695,7 @@ const SignUp = ({ navigation }) => {
                         <SelectDropdown
                             data={specialty}
                             onSelect={(selectedItem3, index) => {
-                                console.log(selectedItem3)
+                                setDealerEtc2(selectedItem3)
                             }}
                             buttonStyle={{ flex: 3, justifyContent: 'center', alignSelf: 'center', borderWidth: 1, borderColor: 'rgb(209,209,211)' }}
                             buttonTextStyle={{ fontSize: 15 }}
@@ -607,7 +763,7 @@ const SignUp = ({ navigation }) => {
                                     deps_3.forEach((element)=>{
                                         data.push(element);
                                     })
-                                    console.log("asdfasdfasdf : " + data);
+                                    // console.log("asdfasdfasdf : " + data);
                                     setdongStack(data);
                                 }
                                 else{
@@ -645,30 +801,16 @@ const SignUp = ({ navigation }) => {
                                             }
                                             setdongStack(data);
                                         }
-                                        console.log();
                                     }} style={{ borderWidth: 1, width: D_Width * 0.28, height: D_Height * 0.03, justifyContent: 'center', flexDirection:'row' }} key={index}>
-                                        <Text style={{ alignSelf: 'center'
-                                        // ,color : 
-                                        // dongStack.find(element=>element.name===dong.name) === undefined ? "black" :'red'
-                                        // ,color:color === undefined ? 'black' : color.includes(dong.name) ? 'green':'red'
-                                        // , color: dong.name === 
-                                        // , color:dongColor.
-                                        // ,color : colors()
-                                        // , color:dongStack === undefined ? "black" : dongStack.find((element)=>element.dong === index) ? "red" :'black'
-                                        // ,color: dongStack === undefined ? "black" : dongStack.dong.includes(index) ? "red" : "black"
-                                        // , color : dongStack === undefined ? "black" : dongStack.forEach((element)=>{if(element.dong === index){return true}else{return false}}) ? "red" :"black"
-                                    }}>{dong.name}</Text>
-                                    
+                                        <Text style={{ alignSelf: 'center'}}>{dong.name}</Text>
                                     {
                                         dongStack===undefined ? null : dongStack.find(element=>element.name===dong.name) === undefined ? null : 
-                                        <View style={{ width:'10%', paddingLeft:'30%'}}>
+                                        <View style={{ width:'10%', paddingLeft:'50%'}}>
+                                            {/* <Image source={{uri:'http://flda.co.kr/images/fldacheked.jpg'}} style={{width:'100%', height:'100%'}}/> */}
+                                            {/* <ImageBackground source={{uri:'http://flda.co.kr/images/fldacheked.jpg'}} style={{width:'100%', height:'100%'}}/> */}
                                             <LocalSvg asset={Arrow} width={10} height={10} fill={"#000000"} style={{backgroundColor:'red'}} />
                                         </View>
-                                        
                                     }
-                                    
-                                    {/* dongStack.find(element=>element.dong.index === index) ? <View style={{ width:"30%", height:"30%", backgroundColor:'red'}}></View> : null} */}
-                                    
                                     </Pressable>
                                 ))}
                             </Text>
@@ -714,14 +856,31 @@ const SignUp = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
                                 <Text style={{ fontSize: 16 }}>{total.sigun}</Text>
                                 <Text onPress={()=>{
-                                    let dd = [];
-                                    dd = dd.concat(totalStack);
-                                    dd.splice(index, 1);
-                                    setTotalStack(dd);
-                                }} style={{ fontSize: 22, lineHeight:21 }}> x</Text>
+                                    let deleteTotal = [];
+                                    deleteTotal = deleteTotal.concat(totalStack);
+                                    deleteTotal.splice(index, 1);
+                                    setTotalStack(deleteTotal);
+                                }} style={{ fontSize: 22, lineHeight:21 }}> x{"\n"}</Text>
                             </View>
                             <Text>{total.dong.map((dong, index) => 
-                            <Text key={index}>{dong.name}{"  "}</Text>
+                            <View key={index} style={{ flexDirection:'row'}}>
+                            <Text key={index}>{dong.name}</Text>
+                            <Text 
+                            onPress={()=>{
+                                let deleteDong = [];
+                                deleteDong = deleteDong.concat(totalStack);
+                                console.log(totalStack[0]);
+                            }}
+                            style={{ lineHeight:14}}
+                            >x{"  "}</Text>
+
+                            {/* <Text onPress={()=>{
+                                let deleteDong = [];
+                                deleteDong = deleteDong.concat(totalStack);
+                                deleteDong.splice(index, 1);
+                                setTotalStack(deleteTotal);
+                            }} style={{ fontSize: 22, lineHeight:21 }}> x</Text> */}
+                            </View>
                             )}{"\n"}</Text>
                         </View>
                     )}</Text>
@@ -736,7 +895,7 @@ const SignUp = ({ navigation }) => {
                 <SelectDropdown
                     data={bankList}
                     onSelect={(selectedItem3, index) => {
-                        console.log(selectedItem3)
+                        setBank(selectedItem3);
                     }}
                     buttonStyle={{ marginTop:15, width: '100%', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, borderColor: 'rgb(209,209,211)' }}
                     buttonTextStyle={{ fontSize: 15 }}
@@ -748,7 +907,7 @@ const SignUp = ({ navigation }) => {
                             borderWidth={1}
                             placeholder="계좌번호를 입력해주세요(-제외하고 입력)"
                             keyboardType='numeric'
-
+                            onChangeText={setAccount}
                         />
                     </View>
                 </View>
@@ -757,6 +916,7 @@ const SignUp = ({ navigation }) => {
                         <TextInput style={{ flex: 3, height: '60%', alignSelf: 'center', paddingHorizontal: 10, borderColor: 'rgb(209,209,211)' }}
                             borderWidth={1}
                             placeholder="예금주를 입력해주세요"
+                            onChangeText={setDepositor}
                         />
                     </View>
                 </View>

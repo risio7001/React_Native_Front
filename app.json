@@ -17,16 +17,35 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier":"com.flroad.my-app",
+      "buildNumber": "1.0.0",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true
     },
     "android": {
+      "package":"com.flroad.my_app",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "config":{
+        "firebase":{
+          "apiKey": "AIzaSyAWJFK3FApKk5GH8uXv6td_kkOyQAbpt_s",
+          "authDomain": "myapp-c9fae.firebaseapp.com",
+          "projectId": "myapp-c9fae",
+          "storageBucket": "myapp-c9fae.appspot.com",
+          "messagingSenderId": "563306879692",
+          "appId": "1:563306879692:web:a2c26e3e367455e0418069",
+          "measurementId": "G-VKSZ7R3KMQ"
+        }
+      }
+    },
+    "plugins": [
+      "sentry-expo"
+    ]
   }
 }

@@ -153,7 +153,7 @@ const TestPage = ({navigation}) => {
                 <View style={{  width: '60%', height: '100%' }}>
                     <Image source={{ uri: 'https://flda.co.kr/data/flda/banner/cartoon_bn_03.png' }} style={{ width: "100%", height: "80%" }} />
                     <View style={{flexDirection:'row', justifyContent:'center', paddingVertical:5}}><Text>아직 회원이 아니신가요?</Text><Text onPress={()=>navigation.navigate('signUpTerms')} style={{ textDecorationLine:'underline'}}>  회원가입</Text></View>
-                    <View style={{alignSelf:'center'}}><Text onPress={()=>alert("아이디 비밀번호 찾기")} style={{textDecorationLine:'underline'}}>아이디 / 비밀번호 찾기</Text></View>
+                    <View style={{alignSelf:'center', flexDirection:'row'}}><Text onPress={()=>navigation.navigate('idHelp')} style={{textDecorationLine:'underline'}}>아이디 /</Text><Text onPress={()=>navigation.navigate('pwHelp')} style={{textDecorationLine:'underline'}}> 비밀번호 찾기</Text></View>
                 </View>
             </View>
             <Text>

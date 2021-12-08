@@ -291,7 +291,7 @@ const Product_2 = ({navigation}) => {
                         renderText={formattedValue=><Text style={{  textAlign:'center', fontWeight: 'bold', fontSize: 22, color:'rgb(93,180,235)' }}>{formattedValue}</Text>}/>
                 </View>
             </View>
-            <Button title="주문하기" color="orange" onPress={()=>{alert("준비중입니다.")}}/>
+            <Button title="주문하기" color="orange" onPress={()=>{navigation.navigate('order')}}/>
         </View> 
         </ScrollView>
             }
