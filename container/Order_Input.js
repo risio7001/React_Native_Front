@@ -126,23 +126,38 @@ const Order_Inpit = () => {
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>근조</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setWords("근조");
+                                                setWordsModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>근조</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setWords("근조");
+                                                setWordsModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>근조</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setWords("근조");
+                                                setWordsModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>근조</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setWords("근조");
+                                                setWordsModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>근조</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setWords("근조");
+                                                setWordsModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>근조</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
@@ -187,27 +202,45 @@ const Order_Inpit = () => {
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>플로드</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setSender("플로드");
+                                                setSenderModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>플로드</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setSender("플로드");
+                                                setSenderModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>플로드</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setSender("플로드");
+                                                setSenderModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>플로드</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setSender("플로드");
+                                                setSenderModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>플로드</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setSender("플로드");
+                                                setSenderModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>플로드</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>
-                                            <Pressable style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
+                                            <Pressable onPress={()=>{
+                                                setSender("플로드");
+                                                setSenderModal(false);
+                                                }} style={{ justifyContent: 'space-between', borderBottomWidth: 1, flexDirection: 'row' }}>
                                                 <Text style={{ paddingVertical: D_Height * 0.03, paddingHorizontal: D_Width * 0.02 }}>플로드</Text>
                                                 <Text style={{ paddingVertical: D_Height * 0.008, marginHorizontal:10, alignSelf:'center', paddingHorizontal: D_Width * 0.02, backgroundColor:'rgb(255,98,0)', color:'white' }}>선택</Text>
                                             </Pressable>

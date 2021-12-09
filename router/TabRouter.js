@@ -19,7 +19,12 @@ import Product_In_Detail from '../tabComponent/Product_In_Detail';
 import Product_Out_Detail from '../tabComponent/Product_Out_Detail';
 import Product_Out_Insert_Review from '../tabComponent/Product_Out_Insert_Review';
 import Product_Review_Rewrite from '../tabComponent/Product_Review_Rewrite';
-import Order_Inpit from '../container/Order_Inpit';
+import Order_Inpit from '../container/Order_Input';
+import Product_More_Deposit from '../tabComponent/Product_More_Deposit';
+import Product_More_Event from '../tabComponent/Product_More_Event';
+import Product_More_Notice from '../tabComponent/Product_More_Notice';
+import Product_More_CS from '../tabComponent/Product_More_CS';
+import Product_More_Member from '../tabComponent/Product_More_Member';
 
 const TabRouter = () => {
 
@@ -31,15 +36,15 @@ const TabRouter = () => {
             <Stack.Navigator screenOptions={{
                 headerShown: false,
             }}>
-                {/* <Stack.Screen name="login" component={Login} /> */}
-                <Stack.Screen name="product0" component={Order_Inpit} />
-                <Stack.Screen name="product1" component={Product_1} />
-                <Stack.Screen name="product2" component={Product_2} />
+                <Stack.Screen name="mainPage" component={MainPage} />
+                <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="productList" component={Product_1} />
+                <Stack.Screen name="productDetail" component={Product_2} />
                 <Stack.Screen name="signUpTerms" component={SignUpTerms} />
                 <Stack.Screen name="signUpInput" component={SignUp} />
                 <Stack.Screen name="idHelp" component={IdHelp} />
                 <Stack.Screen name="pwHelp" component={PassHelp} />
-                <Stack.Screen name="order" component={Order_Inpit}/>
+                <Stack.Screen name="order" component={Order_Inpit} />
             </Stack.Navigator>
         </>
     }
@@ -74,6 +79,20 @@ const TabRouter = () => {
             }}>
                 <Stack.Screen name="ReviewMain" component={Product_Review}/>
                 <Stack.Screen name="ReviewRewrite" component={Product_Review_Rewrite}/>
+            </Stack.Navigator>
+        </>
+    }
+    const MoreStack = () => {
+        return <>
+            <Stack.Navigator screenOptions={{
+                headerShown: false
+            }}>
+                <Stack.Screen name="more" component={Product_More} />
+                <Stack.Screen name="deposit" component={Product_More_Deposit} />
+                <Stack.Screen name="event" component={Product_More_Event} />
+                <Stack.Screen name="notice" component={Product_More_Notice}/>
+                <Stack.Screen name="cs" component={Product_More_CS}/>
+                <Stack.Screen name="member" component={Product_More_Member}/>
             </Stack.Navigator>
         </>
     }
@@ -112,7 +131,7 @@ const TabRouter = () => {
                     size = 0
                 }
             }} />
-            <Tab.Screen name="더보기.." component={Product_More} options={{
+            <Tab.Screen name="더보기.." component={MoreStack} options={{
                 tabBarLabelStyle: styles.tabLabel,
                 tabBarIcon: ({ size }) => {
                     size = 0

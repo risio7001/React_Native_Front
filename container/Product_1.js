@@ -13,7 +13,7 @@ const Product_1 = ({navigation, route}) => {
     const flatListRef = React.useRef();
 
     const goDetail = (e) => {
-        navigation.navigate("product2", e);
+        navigation.navigate("productDetail", e);
     }
 
     const deviceWidth = Dimensions.get('window').width;

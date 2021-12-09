@@ -48,7 +48,7 @@ const TestPage = ({navigation}) => {
                     alert(`${result.Name}님 로그인 되었습니다.`);
                     setUsername("");
                     setPassword("");
-                    return navigation.navigate('product0')
+                    return navigation.navigate('mainPage')
                 }
             } catch (err) {
                 console.log(err)

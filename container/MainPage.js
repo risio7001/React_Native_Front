@@ -73,7 +73,7 @@ const MainPage = ({navigation}) => {
         navigation.navigate('test')
     }
     const goList = (items) => {
-        navigation.navigate('product1', items);
+        navigation.navigate('productList', items);
     }
 
     return<>
