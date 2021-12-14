@@ -8,9 +8,10 @@ import { Rating } from 'react-native-ratings';
 import ImageModal from 'react-native-image-modal';
 
 
-const Product_Review = () => {
+const Product_Review = ({navigation}) => {
 
     const [toggle, setToggle] = React.useState(1);
+    const [starValue, setStarValue] = React.useState(5);
 
     const data = {
         "id":"test",
@@ -50,7 +51,7 @@ const Product_Review = () => {
                         </View>
                         <Text/>
                         <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
-                            <Pressable onPress={()=>Alert.alert("알림", "수정하시겠습니까?", [{text:"취소"}, {text:"확인", onPress:()=>alert("수정페이지 이동")}])} style={{backgroundColor: 'rgb(178,171,154)', paddingVertical:10, paddingHorizontal:10, marginHorizontal:5}}><Text style={{color:'white'}}>수정</Text></Pressable>
+                            <Pressable onPress={()=>Alert.alert("알림", "수정하시겠습니까?", [{text:"취소"}, {text:"확인", onPress:()=>navigation.navigate("ReviewRewrite")}])} style={{backgroundColor: 'rgb(178,171,154)', paddingVertical:10, paddingHorizontal:10, marginHorizontal:5}}><Text style={{color:'white'}}>수정</Text></Pressable>
                             <Pressable onPress={()=>Alert.alert("알림", "삭제하시겠습니까?", [{text:"취소"}, {text:"확인", onPress:()=>alert("삭제")}])} style={{backgroundColor: 'rgb(178,171,154)', paddingVertical:10, paddingHorizontal:10, marginHorizontal:5}}><Text style={{color:'white'}}>삭제</Text></Pressable>
                         </View>
                     </View>
@@ -63,7 +64,7 @@ const Product_Review = () => {
                             <Rating
                                 type='star'
                                 ratingCount={5}
-                                startingValue={5}
+                                startingValue={starValue}
                                 imageSize={16}
                                 tintColor='rgb(242,242,242)'
                                 readonly={true}
@@ -96,7 +97,7 @@ const Product_Review = () => {
                             </Pressable>
                         </View> */}
                         <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
-                        <Pressable onPress={() => Alert.alert("알림", "댓글달기", [{ text: "취소" }, { text: "확인", onPress: () => alert("댓글입력 이동") }])} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 20, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>댓글 달기</Text></Pressable>
+                        <Pressable onPress={() =>navigation.navigate("ReviewRewrite")} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 20, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>댓글 달기</Text></Pressable>
                         </View>
                     </View>
                 </>

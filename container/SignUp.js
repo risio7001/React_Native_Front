@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Pressable, ScrollView, TextInput, Modal } from 'react-native';
+import { View, Text, Pressable, ScrollView, TextInput, Modal, SafeAreaView } from 'react-native';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
 import Arrow2 from '../img/arrow2.svg';
@@ -635,6 +635,8 @@ const SignUp = ({ navigation }) => {
                         </View>
 
                         <Modal visible={isModal}>
+                            <SafeAreaView/>
+                            <Pressable onPress={()=>setIsModal(false)} style={{justifyContent:'center', paddingVertical:10, backgroundColor:'orange', borderRadius:10}}><Text style={{alignSelf:'center', color:'white', fontSize:18}}>닫기</Text></Pressable>
                             <Postcode
                                 style={{ flex: 3, paddingTop: Constants.statusBarHeight }}
                                 jsOptions={{ animation: true }}
@@ -805,11 +807,9 @@ const SignUp = ({ navigation }) => {
                                         <Text style={{ alignSelf: 'center'}}>{dong.name}</Text>
                                     {
                                         dongStack===undefined ? null : dongStack.find(element=>element.name===dong.name) === undefined ? null : 
-                                        <View style={{ width:'10%', paddingLeft:'50%'}}>
-                                            {/* <Image source={{uri:'http://flda.co.kr/images/fldacheked.jpg'}} style={{width:'100%', height:'100%'}}/> */}
-                                            {/* <ImageBackground source={{uri:'http://flda.co.kr/images/fldacheked.jpg'}} style={{width:'100%', height:'100%'}}/> */}
+                                        // <View style={{ width:'10%', paddingLeft:'50%'}}>
                                             <LocalSvg asset={Arrow} width={10} height={10} fill={"#000000"} style={{backgroundColor:'red'}} />
-                                        </View>
+                                        // </View>
                                     }
                                     </Pressable>
                                 ))}
@@ -867,19 +867,18 @@ const SignUp = ({ navigation }) => {
                             <Text key={index}>{dong.name}</Text>
                             <Text 
                             onPress={()=>{
+                                alert('준비중');
                                 let deleteDong = [];
-                                deleteDong = deleteDong.concat(totalStack);
-                                console.log(totalStack[0]);
+                                let test = [];
+                                test = test.concat(totalStack);
+                                
+                                deleteDong = totalStack.find(element=>element.sigun===total.sigun);
+                                deleteDong.dong.splice(index, 1);
+                                
+                                console.log(deleteDong);
                             }}
                             style={{ lineHeight:14}}
                             >x{"  "}</Text>
-
-                            {/* <Text onPress={()=>{
-                                let deleteDong = [];
-                                deleteDong = deleteDong.concat(totalStack);
-                                deleteDong.splice(index, 1);
-                                setTotalStack(deleteTotal);
-                            }} style={{ fontSize: 22, lineHeight:21 }}> x</Text> */}
                             </View>
                             )}{"\n"}</Text>
                         </View>

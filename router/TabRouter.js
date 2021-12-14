@@ -19,12 +19,16 @@ import Product_In_Detail from '../tabComponent/Product_In_Detail';
 import Product_Out_Detail from '../tabComponent/Product_Out_Detail';
 import Product_Out_Insert_Review from '../tabComponent/Product_Out_Insert_Review';
 import Product_Review_Rewrite from '../tabComponent/Product_Review_Rewrite';
-import Order_Inpit from '../container/Order_Input';
+import Order_Input from '../container/Order_Input';
 import Product_More_Deposit from '../tabComponent/Product_More_Deposit';
 import Product_More_Event from '../tabComponent/Product_More_Event';
 import Product_More_Notice from '../tabComponent/Product_More_Notice';
 import Product_More_CS from '../tabComponent/Product_More_CS';
 import Product_More_Member from '../tabComponent/Product_More_Member';
+import Product_More_CS_List from '../tabComponent/Product_More_CS_List';
+import Product_More_CS_Modify from '../tabComponent/Product_More_CS_Modify';
+import Product_More_CS_FAQ from '../tabComponent/Product_More_CS_FAQ';
+import Product_More_CS_Write from '../tabComponent/Product_More_CS_Write';
 
 const TabRouter = () => {
 
@@ -36,15 +40,16 @@ const TabRouter = () => {
             <Stack.Navigator screenOptions={{
                 headerShown: false,
             }}>
-                <Stack.Screen name="mainPage" component={MainPage} />
+            <Stack.Screen name="member" component={Product_More_Member}/>
                 <Stack.Screen name="login" component={Login} />
+                <Stack.Screen name="order" component={Order_Input} />
+                <Stack.Screen name="mainPage" component={MainPage} />
                 <Stack.Screen name="productList" component={Product_1} />
                 <Stack.Screen name="productDetail" component={Product_2} />
                 <Stack.Screen name="signUpTerms" component={SignUpTerms} />
                 <Stack.Screen name="signUpInput" component={SignUp} />
                 <Stack.Screen name="idHelp" component={IdHelp} />
                 <Stack.Screen name="pwHelp" component={PassHelp} />
-                <Stack.Screen name="order" component={Order_Inpit} />
             </Stack.Navigator>
         </>
     }
@@ -92,7 +97,10 @@ const TabRouter = () => {
                 <Stack.Screen name="event" component={Product_More_Event} />
                 <Stack.Screen name="notice" component={Product_More_Notice}/>
                 <Stack.Screen name="cs" component={Product_More_CS}/>
-                <Stack.Screen name="member" component={Product_More_Member}/>
+                <Stack.Screen name="csList" component={Product_More_CS_List}/>
+                <Stack.Screen name="csModify" component={Product_More_CS_Modify}/>
+                <Stack.Screen name="csFAQ" component={Product_More_CS_FAQ}/>
+                <Stack.Screen name="csWrite" component={Product_More_CS_Write}/>
             </Stack.Navigator>
         </>
     }

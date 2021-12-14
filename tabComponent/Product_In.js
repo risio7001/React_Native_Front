@@ -67,57 +67,59 @@ const Product_In = ({navigation}) => {
     //     </>
     // }
 
+
     const goDetail = (e) => {
         navigation.navigate("pullDetail");
     }
-
 
     const setView = () => {  //  data 받아서 items에 담은 후 렌더링 
         switch (toggle) {
             case 1: // 접수대기
                 return <>
-                    <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
-                        <Text style={{ alignSelf: 'center' }}>날짜</Text>
-                        <Text></Text>
-                        <Text style={{ alignSelf: 'center' }}>일련번호</Text>
-                    </View>
+                    <View>
+                        <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
+                            <Text style={{ alignSelf: 'center' }}>날짜</Text>
+                            <Text></Text>
+                            <Text style={{ alignSelf: 'center' }}>일련번호</Text>
+                        </View>
 
-                    <View style={{ width: D_Width, height: D_Height * 0.20, flexDirection: 'column' }}>
-                        <View style={{ marginHorizontal: 10, borderBottomWidth: 1 }}>
-                            <Text style={{ fontSize: 35,fontWeight:'bold', textAlign:'center' }}>2021-10-13 오후 1:46:58</Text>
-                            <Text style={{ alignSelf:'center' }}>테스트-꽃바구니</Text>
-                            <Text style={{ alignSelf:'center' }}>서울 영등포구 가마산로 311 (대림동) test{"\n"}</Text>
+                        <View style={{ width: D_Width, height: D_Height * 0.20, flexDirection: 'column' }}>
+                            <View style={{ marginHorizontal: 10, borderBottomWidth: 1 }}>
+                                <Text style={{ fontSize: 35, fontWeight: 'bold', textAlign: 'center' }}>2021-10-13 오후 1:46:58</Text>
+                                <Text style={{ alignSelf: 'center' }}>테스트-꽃바구니</Text>
+                                <Text style={{ alignSelf: 'center' }}>서울 영등포구 가마산로 311 (대림동) test{"\n"}</Text>
+                            </View>
                         </View>
                     </View>
                 </>
             case 2: // 처리중
                 return <>
                     <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
-                        <Text style={{ alignSelf: 'center', fontSize:12, color:'grey' }}>2021-10-12 오후 1:10:34</Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 12, color: 'grey' }}>2021-10-12 오후 1:10:34</Text>
                         <Text></Text>
-                        <Text style={{ alignSelf: 'center', fontSize:12, color:'grey' }}>A132487542424575</Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 12, color: 'grey' }}>A132487542424575</Text>
                     </View>
 
                     <View style={{ width: D_Width, height: D_Height * 0.25, flexDirection: 'column' }}>
-                        <View style={{ marginHorizontal: 15, borderBottomWidth:1 }}>
-                            <Text style={{fontSize:18, color:'grey', fontWeight:'bold'}}>배송일시 2021.10.12</Text>
-                            <Text style={{color:'grey', fontWeight:'bold', paddingTop:10}}>배송상세</Text>
+                        <View style={{ marginHorizontal: 15, borderBottomWidth: 1 }}>
+                            <Text style={{ fontSize: 18, color: 'grey', fontWeight: 'bold' }}>배송일시 2021.10.12</Text>
+                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 10 }}>배송상세</Text>
                             <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>발주자 플로드</Text>
                             <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>테스트-3단</Text>
                             <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>배송지 서울 영등포구 가마산로 311 (대림동){"\n"}</Text>
 
                             <Pressable onPress={() => _pickImage()} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(144,176,89)', justifyContent: 'center' }}>
-                                {image === undefined ? 
-                                <Text style={{ alignSelf: 'center', color: 'white' }}>사진등록</Text> 
-                                :
-                                <Text style={{ alignSelf: 'center', color: 'white' }}>등록완료</Text>
+                                {image === undefined ?
+                                    <Text style={{ alignSelf: 'center', color: 'white' }}>사진등록</Text>
+                                    :
+                                    <Text style={{ alignSelf: 'center', color: 'white' }}>등록완료</Text>
                                 }
                             </Pressable>
                             <Text></Text>
                             <View style={{ flexDirection: 'row' }}>
-                                <Pressable onPress={()=>Alert.alert("알림", "주문을 취소할까요?", [{text:"취소"}, {text:"확인", onPress:()=>alert("발주 취소되었습니다.")}])} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'red', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color:'white' }}>주문취소</Text></Pressable>
+                                <Pressable onPress={() => Alert.alert("알림", "주문을 취소할까요?", [{ text: "취소" }, { text: "확인", onPress: () => alert("수주 취소되었습니다.") }])} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'red', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>주문취소</Text></Pressable>
                                 <Text>{"  "}</Text>
-                                <Pressable onPress={()=>goDetail()} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(153,153,153)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color:'white' }}>상세보기</Text></Pressable>
+                                <Pressable onPress={() => goDetail()} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(153,153,153)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>상세보기</Text></Pressable>
                             </View>
                             <Text></Text>
                         </View>
@@ -146,25 +148,41 @@ const Product_In = ({navigation}) => {
                                 <Modal visible={isVisible} transparent>
                                     <SafeAreaView />
                                     <View style={{ width: D_Width, height: D_Height * 0.9, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.6)' }}>
-                                        <Pressable onPress={() => setIsVisible(false)} style={{marginHorizontal:50, marginBottom:20, flexDirection:'row-reverse'}}>
+                                        <Pressable onPress={() => setIsVisible(false)} style={{ marginHorizontal: 50, marginBottom: 20, flexDirection: 'row-reverse' }}>
                                             <LocalSvg asset={XMark} width={25} height={25} fill={"#ffffff"} />
                                         </Pressable>
                                         <Image source={{ uri: 'https://source.unsplash.com/random' }} style={{ alignSelf: 'center', width: 250, height: 250 }}></Image>
                                     </View>
                                 </Modal>
-                                <Pressable onPress={() => alert("구매완료")}  style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(153,153,153)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>구매완료</Text></Pressable>
+                                <Pressable onPress={() => alert("구매완료")} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(153,153,153)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>구매완료</Text></Pressable>
                                 <Text>{"  "}</Text>
-                                <Pressable onPress={()=>goDetail()} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(153,153,153)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>상세보기</Text></Pressable>
+                                <Pressable onPress={() => goDetail()} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(153,153,153)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>상세보기</Text></Pressable>
                             </View>
                             <Text></Text>
-                            <Pressable onPress={() => alert("배송사진 변경")} style={{ width: D_Width * 0.25, height: D_Height * 0.06, backgroundColor: 'blue', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>배송사진 변경</Text></Pressable>
+                            <Pressable onPress={() => _pickImage()} style={{ width: D_Width * 0.25, height: D_Height * 0.06, backgroundColor: 'blue', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>배송사진 변경</Text></Pressable>
                             <Text></Text>
                         </View>
                     </View>
                 </>
+            default: return <>
+                <View>
+                    <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
+                        <Text style={{ alignSelf: 'center' }}>날짜</Text>
+                        <Text></Text>
+                        <Text style={{ alignSelf: 'center' }}>일련번호</Text>
+                    </View>
+
+                    <View style={{ width: D_Width, height: D_Height * 0.20, flexDirection: 'column' }}>
+                        <View style={{ marginHorizontal: 10, borderBottomWidth: 1 }}>
+                            <Text style={{ fontSize: 35, fontWeight: 'bold', textAlign: 'center' }}>2021-10-13 오후 1:46:58</Text>
+                            <Text style={{ alignSelf: 'center' }}>테스트-꽃바구니</Text>
+                            <Text style={{ alignSelf: 'center' }}>서울 영등포구 가마산로 311 (대림동) test{"\n"}</Text>
+                        </View>
+                    </View>
+                </View>
+            </>
+
         }
-        return <>
-        </>
     }
 
 

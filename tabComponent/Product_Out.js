@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Alert, Pressable, View } from 'react-native';
-import { ScrollView, Text } from 'react-native';
+import { Alert, Image, Pressable, View } from 'react-native';
+import { ScrollView, Text, Modal, SafeAreaView } from 'react-native';
 import LocalSvg from 'react-native-svg/src/LocalSvg';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
+import XMark from '../img/xMark.svg'
 
 const Product_Out = ({navigation}) => {
 
     const [toggle, setToggle] = React.useState(1);
-
-
+    const [isVisible, setIsVisible] = React.useState(false);
 
     const setView = () => {
         return <>
@@ -59,7 +59,18 @@ const Product_Out = ({navigation}) => {
                             {toggle === 4 ?
                                 <View>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Pressable onPress={() => alert("배송사진 보기")} style={{ width: D_Width * 0.25, height: D_Height * 0.06, backgroundColor: 'rgb(144,176,89)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>배송사진 보기</Text></Pressable>
+                                    <Pressable onPress={() => setIsVisible(true)} style={{ width: D_Width * 0.25, height: D_Height * 0.06, backgroundColor: 'rgb(144,176,89)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>배송사진 보기</Text></Pressable>
+                                <Text>{"  "}</Text>
+                                <Modal visible={isVisible} transparent>
+                                    <SafeAreaView />
+                                    <View style={{ width: D_Width, height: D_Height * 0.9, justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.6)' }}>
+                                        <Pressable onPress={() => setIsVisible(false)} style={{marginHorizontal:50, marginBottom:20, flexDirection:'row-reverse'}}>
+                                            <LocalSvg asset={XMark} width={25} height={25} fill={"#ffffff"} />
+                                        </Pressable>
+                                        <Image source={{ uri: 'https://source.unsplash.com/random' }} style={{ alignSelf: 'center', width: 250, height: 250 }}></Image>
+                                    </View>
+                                </Modal>
+                                        {/* <Pressable onPress={() => alert("배송사진 보기")} style={{ width: D_Width * 0.25, height: D_Height * 0.06, backgroundColor: 'rgb(144,176,89)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>배송사진 보기</Text></Pressable> */}
                                         <Text>{"  "}</Text>
                                         <Pressable onPress={() => alert("구매완료")} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'red', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>구매완료</Text></Pressable>
                                         <Text>{"  "}</Text>

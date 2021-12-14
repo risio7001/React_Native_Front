@@ -1,9 +1,14 @@
+import Postcode from '@actbase/react-daum-postcode';
 import * as React from 'react';
-import { Dimensions, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Dimensions, Image, Modal, Pressable, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
+import Constants from 'expo-constants';
 
 const MainPage = ({navigation}) => {
     const deviceWidth = Dimensions.get('window').width;
     const deviceHeight = Dimensions.get('window').height;
+    const [addr, setAddr] = React.useState();
+    const [postModal, setPostModal] = React.useState(false);
+
     const cate_main = [
         {
             "name":"축하화환"
@@ -69,9 +74,6 @@ const MainPage = ({navigation}) => {
             "cate":"63167"
         }
     ]
-    const goDetail = () => {
-        navigation.navigate('test')
-    }
     const goList = (items) => {
         navigation.navigate('productList', items);
     }
@@ -88,8 +90,8 @@ const MainPage = ({navigation}) => {
                             textContentType='none'
                             placeholder='서울 송파구 석촌호수로 222 (석촌동, J타워)'
                         /> */}
-                        <Text style={{fontSize:12, alignSelf:'center', color:'grey'}}>
-                            서울 송파구 석촌호수로 222 (석촌동, J타워)
+                        <Text style={{fontSize:12, alignSelf:'center', color:addr === undefined ? 'grey' : 'black'}}>
+                            {addr === undefined ? '서울 송파구 석촌호수로 222 (석촌동, J타워)' : addr}
                         </Text>
                         </Pressable>
                         <TextInput style={{width:'100%', height:'45%', borderWidth:2, borderColor:'rgb(119,167,73)', paddingHorizontal:10}}
@@ -99,12 +101,27 @@ const MainPage = ({navigation}) => {
                         />
                     </View>
                     <View style={{width:'30%', height:'100%', justifyContent:'center', alignItems:'center'}}>
-                        <Pressable onPress={()=>alert("준비중")} style={{ width: deviceHeight * 0.10, height: deviceHeight * 0.10, backgroundColor: 'rgb(119,167,73)', borderRadius: (deviceHeight * 0.1) / 2, justifyContent:'center', alignItems:'center' }}>
+                        <Pressable onPress={()=>setPostModal(true)} style={{ width: deviceHeight * 0.10, height: deviceHeight * 0.10, backgroundColor: 'rgb(119,167,73)', borderRadius: (deviceHeight * 0.1) / 2, justifyContent:'center', alignItems:'center' }}>
                         
                             <Text style={{color:'white', fontWeight:'bold'}}>
                                 찾기
                             </Text>
                         </Pressable>
+
+                        <Modal visible={postModal}>
+                            <SafeAreaView />
+                            <Pressable onPress={() => setPostModal(false)} style={{ justifyContent: 'center', paddingVertical: 10, backgroundColor: 'orange', borderRadius: 10 }}><Text style={{ alignSelf: 'center', color: 'white', fontSize: 18 }}>닫기</Text></Pressable>
+                            <Postcode
+                                style={{ flex: 3 }}
+                                jsOptions={{ animation: true }}
+                                onSelected={data => {
+                                    // console.log(data);
+                                    // setPost(data.zonecode);
+                                    setAddr(data.address)
+                                    setPostModal(false);
+                                }}
+                            />
+                        </Modal>
                     </View>
                 </View>
             </View>

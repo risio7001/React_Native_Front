@@ -130,7 +130,6 @@ const TestPage = ({navigation}) => {
                     <TextInput
                         style={{ paddingHorizontal: 5, backgroundColor: 'white', borderWidth: 1, borderColor: 'rgb(209,209,211)', width: '90%', height: '40%' }}
                         secureTextEntry={true}
-                        keyboardType="visible-password"
                         textContentType="name"
                         placeholder="비밀번호"
                         value={password}

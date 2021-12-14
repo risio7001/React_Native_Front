@@ -4,7 +4,7 @@ import LocalSvg from 'react-native-svg/src/LocalSvg';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
 
-const Product_More_Event = () => {
+const Product_More_Event = ({navigation}) => {
 
     const [toggle, setToggle] = React.useState(true);
 

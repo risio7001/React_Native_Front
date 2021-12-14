@@ -4,17 +4,21 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import LocalSvg from 'react-native-svg/src/LocalSvg';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
-import Calendar from '../img/calendarMark.svg';
+import Drop from '../img/dropDownBox.svg'
+import CalendarMark from '../img/calendarMark.svg';
 import Time from '../img/timeMark.svg';
 import NumberFormat from 'react-number-format';
 import Search from '../img/searchMark.svg';
 import SelectDropdown from 'react-native-select-dropdown'
 import * as ImagePicker from 'expo-image-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+// import DateTimePicker from '@react-native-community/datetimepicker';
 import Picker from 'react-native-date-picker';
+import { orderData_E, orderData_H, orderData_M } from '../data/orderData';
+import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars';
+import Postcode from '@actbase/react-daum-postcode';
 
-const Order_Inpit = () => {
-    const [date, setDate] = React.useState(new Date());
+
+const Order_Input = ({navigation}) => {
     const [isDate, setIsDate] = React.useState();
     const [dateModal, setDateModal] = React.useState(false);
     const [timeModal, setTimeModal] =  React.useState(false);
@@ -29,28 +33,96 @@ const Order_Inpit = () => {
     const [deliveryTime1, setDeliveryTime1] = React.useState();
     const [deliveryTime2, setDeliveryTime2] = React.useState();
     const [deliveryTime3, setDeliveryTime3] = React.useState();
+    const [date, setDate] = React.useState();
+    const [mode, setMode] = React.useState('date');
+    const [show, setShow] = React.useState(false);
 
-    const onChange_date = (event, selectedDate) => {
-        setDate(selectedDate);
-        setIsDate(JSON.stringify(selectedDate).slice(1,11));
-      };
+    const [deliveryNow_H, setDeliveryNow_H] = React.useState("시간");
+    const [deliveryNow_M, setDeliveryNow_M] = React.useState("분");
+    const [delivery_E, setDelivery_E] = React.useState('상세선택');
+    const drop_M = React.useRef({});
+    const drop_H = React.useRef({});
 
-    const onChange_time = (event, selectedTime) =>{
-        setTime(selectedTime);
-        setIsTime(JSON.stringify(selectedTime).slice(12, 20));
-    }
+    const [addr, setAddr] = React.useState();
+    const [addrVisible, setAddrVisible] = React.useState(false);
+    
+    var date1 = new Date().getDate(); //To get the Current Date
+    var month = new Date().getMonth() + 1; //To get the Current Month
+    var year = new Date().getFullYear(); //To get the Current Year
+    var hours = new Date().getHours(); //To get the Current Hours
+    var min = new Date().getMinutes(); //To get the Current Minutes
+    var sec = new Date().getSeconds(); //To get the Current Seconds
 
+    console.log(date1);
+    console.log("qwqwe"+month);
+    console.log(year);
+    console.log(hours);
+    console.log(min);
+    console.log(sec);
 
-        // 서버작업 완료 후 같은폼 플랫리스트 사용예정
-    // const customModal = (toggle) => {
-    //     return <>
-            
-    //     </>
-    // }
+    // const onChange = (event, selectedDate) => {
+    //   const currentDate = selectedDate || date;
+    //   setShow(Platform.OS === 'ios');
+    //   if(mode === 'date'){
+    //     setDate(currentDate);
+    //   }
+    //   else{
+    //     setTime(currentDate);
+    //   }
+    //   setShow(false);
+    // };
+  
+    // const showMode = (currentMode) => {
+    //   setShow(true);
+    //   setMode(currentMode);
+    //   console.log("123123");
+    // };
+  
+    // const showDatepicker = () => {
+    //   showMode('date');
+    // };
+  
+    // const showTimepicker = () => {
+    //   showMode('time');
+    // };
     
 
+    // const onChange_date = (event, selectedDate) => {
+    //     const currentDate = selectedDate || date;
+    //     setDate(currentDate);
+    //     if(selectedDate === undefined){
+
+    //     }else{
+    //         setIsDate(JSON.stringify(currentDate).slice(1,11));
+    //     }
+        
+    //   };
+
+    // const onChange_time = (event, selectedTime) =>{
+    //     setTime(selectedTime);
+    //     console.log(selectedTime);
+    //     setIsTime(JSON.stringify(selectedTime).slice(12, 20));
+    // }
+
+
+    // 서버작업 완료 후 같은폼 플랫리스트 사용예정
+    // const customModal = (toggle) => {
+    //     return <>
+
+    //     </>
+    // }
+
+    LocaleConfig.locales['ko'] = {
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월.', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        today: '오늘'
+    };
+    LocaleConfig.defaultLocale = 'ko';
+
     return <>
-        <ScrollView nestedScrollEnabled={true} style={{backgroundColor:'rgb(245,240,224)'}}>
+        <ScrollView nestedScrollEnabled={true} style={{ backgroundColor: 'rgb(245,240,224)' }}>
             <View style={{ width: D_Width, height: (D_Height * 0.08), backgroundColor: "black", flexDirection: "row", justifyContent: "center" }}>
                 <View style={{ width: (D_Width * 0.95), height: '100%', flexDirection: 'row' }}>
                     <Pressable onPress={() => navigation.goBack()} style={{ flex: 1, transform: [{ rotate: '180deg' }], justifyContent: 'center' }}>
@@ -178,7 +250,7 @@ const Order_Inpit = () => {
                             value={sender}
                         />
                         <Pressable
-                        onPress={()=>setSenderModal(true)}
+                        onPress={()=>{setSenderModal(true)}}
                             style={{ flex: 1, backgroundColor: 'rgb(255,98,0)', justifyContent: 'center' }}
                         >
                             <LocalSvg asset={Search} width={25} height={25} fill={"#ffffff"} style={{ alignSelf: 'center' }} />
@@ -279,67 +351,128 @@ const Order_Inpit = () => {
                         style={{ height: 50, borderBottomWidth: 1, paddingHorizontal: 10, flexDirection: 'row', borderColor:'rgb(232,230,224)' }}
                     >
                         <View style={{ flexDirection: 'column', justifyContent: 'center', flex: 3  }}>
-                            {/* {isDate} */}
-                            {isDate === undefined ? <Text style={{color:'rgb(160,160,160)'}}>배달일</Text> :
-                                <Text style={{color:'rgb(160,160,160)'}}>{isDate}</Text>
+                            {date === undefined ? <Text style={{color:'rgb(160,160,160)'}}>배달일</Text> :
+                                <Text style={{color:'rgb(160,160,160)'}}>{date}</Text>
                             }
                         </View>
 
-                        <Pressable onPress={()=>setDateModal(true)} style={{ flex: 1, justifyContent:'center'}}>
-                            <LocalSvg asset={Calendar} width={35} height={35} fill={"#000000"} />
+                        <Pressable onPress={() => {
+                            setDateModal(true);
+                        }} style={{ flex: 1, justifyContent: 'center' }}>
+                            <LocalSvg asset={CalendarMark} width={35} height={35} fill={"#000000"} />
                         </Pressable>
+
                         <Modal visible={dateModal} transparent>
                             <SafeAreaView />
-                            <View style={{ backgroundColor: 'rgba(255,255,255,1)', marginTop: D_Height * 0.5 }}>
-                                <Text style={{ textAlign:'right', fontSize:25, paddingHorizontal:30, color:'blue'}} onPress={() => setDateModal(false)}>완료</Text>
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={date}
-                                    mode={'date'}
-                                    is24Hour={true}
-                                    locale={"ko"}
-                                    display="spinner"
-                                    onChange={onChange_date}
-                                    minimumDate={new Date()}
-                                />
-                            </View>
+                            <View style={{ height: D_Height, justifyContent: 'center', backgroundColor:"rgba(0,0,0,0.6)" }}>
+                                <View style={{flexDirection:'row', justifyContent:'center'}}>
+                                <Pressable onPress={() => setDateModal(false)} style={{ width: D_Height * 0.05, height: D_Height * 0.05, backgroundColor: 'grey', borderRadius: (D_Height * 0.05) / 2, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ fontSize: 20, textAlign: 'center', alignSelf: 'center', color:'white', fontSize:30 }}>x</Text>
+                                </Pressable>
+                                </View>
+                                <Calendar
+                                    style={{ width: 250, alignSelf: 'center', borderWidth: 1 }}
+                                    current={new Date()}
+                                    minDate={new Date()}
+                                    onDayPress={(day) => {
+                                        setDate(day.dateString)
+                                        setDateModal(false);
+                                    }}
+                                /></View>
                         </Modal>
-                        <Pressable style={{ flex: 2, backgroundColor: 'red', justifyContent: 'center' }}>
+                        <Pressable onPress={()=>{
+                            if(new Date().getHours() <= 12){
+                                setDeliveryNow_H("오전 " + JSON.stringify(new Date().getHours())+"시");
+                            }else{
+                                setDeliveryNow_H("오후 " + JSON.stringify((new Date().getHours()-12)+"시"));
+                            }
+                            
+                            setDeliveryNow_M(JSON.stringify(new Date().getMinutes()));
+                            setDate(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate());
+                            drop_H.current.reset();
+                            drop_M.current.reset();
+                        }} style={{ flex: 2, backgroundColor: 'red', justifyContent: 'center' }}>
                             <Text style={{ alignSelf: 'center', color: 'white' }}>
                                 즉시배송
                             </Text>
                         </Pressable>
                     </Pressable>
-                    <View style={{ flexDirection:'row', height: 50, borderBottomWidth: 1, paddingHorizontal: 10, borderColor: 'rgb(232,230,224)' }}>
-                        <View style={{ flexDirection: 'column', justifyContent: 'center', flex: 3 }}>
-                            {isTime === undefined ? <Text style={{ color: 'rgb(160,160,160)' }}>배달시간</Text> :
-                                <Text style={{ color: 'rgb(160,160,160)' }}>{isTime}</Text>
-                            }
+                    {/* orderData_E, orderData_H, orderData_M */}
+                    <Pressable style={{paddingVertical:10, borderBottomWidth: 1, paddingHorizontal: 10, borderColor:'rgb(232,230,224)' }}>
+                        <Text style={{paddingVertical:10, color:'grey'}}>배달시간</Text>
+                        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <SelectDropdown
+                            ref={drop_H}
+                            data={orderData_H}
+                            onSelect={(selectedItem, index) => {
+                                setDeliveryNow_H(selectedItem)
+                            }}
+                            
+                            renderDropdownIcon={()=>{
+                                return <>
+                                    <View style={{ backgroundColor:'grey', paddingVertical:'2%', paddingHorizontal:'2%'}}>
+                                        <LocalSvg asset={Drop} width={15} height={15} fill={"white"} />
+                                    </View>
+                                </>
+                            }}
+                            buttonStyle={{width:'31%', backgroundColor:'white', height:40, borderColor:'grey', borderWidth:1, borderRadius:5}}
+                            buttonTextStyle={{ fontSize: 13,textAlign:'left', fontWeight:'bold', color:'grey'}}
+                            defaultButtonText={deliveryNow_H}
+                        /> 
+                        <SelectDropdown
+                            ref={drop_M}
+                            data={orderData_M}
+                            onSelect={(selectedItem, index) => {
+                                setDeliveryNow_M(selectedItem);
+                            }}
+                            renderDropdownIcon={()=>{
+                                return <>
+                                    <View style={{ backgroundColor:'grey', paddingVertical:'2%', paddingHorizontal:'2%'}}>
+                                        <LocalSvg asset={Drop} width={15} height={15} fill={"white"} />
+                                    </View>
+                                </>
+                            }}
+                            buttonStyle={{width:'31%', backgroundColor:'white', height:40, borderColor:'grey', borderWidth:1, borderRadius:5}}
+                            buttonTextStyle={{ fontSize: 13,textAlign:'left', fontWeight:'bold', color:'grey'}}
+                            defaultButtonText={deliveryNow_M}
+                        /> 
+                        <SelectDropdown
+                            data={orderData_E}
+                            onSelect={(selectedItem, index) => {
+                                setDelivery_E(selectedItem);
+                            }}
+                            renderDropdownIcon={()=>{
+                                return <>
+                                    <View style={{ backgroundColor:'grey', paddingVertical:'2%', paddingHorizontal:'2%'}}>
+                                        <LocalSvg asset={Drop} width={15} height={15} fill={"white"} />
+                                    </View>
+                                </>
+                            }}
+                            buttonStyle={{width:'31%', backgroundColor:'white', height:40, borderColor:'grey', borderWidth:1, borderRadius:5}}
+                            buttonTextStyle={{ fontSize: 13,textAlign:'left', fontWeight:'bold', color:'grey'}}
+                            defaultButtonText={delivery_E}
+                            />
                         </View>
-                        <Pressable onPress={() => setTimeModal(true)} style={{ flex: 1, justifyContent: 'center' }}>
-                            <LocalSvg asset={Time} width={35} height={35} fill={"#000000"} />
-                        </Pressable>
-                        <Modal visible={timeModal} transparent>
-                            <SafeAreaView />
-                            <View style={{ backgroundColor: 'rgba(255,255,255,1)', marginTop: D_Height * 0.5 }}>
-                            <Text style={{ textAlign:'right', fontSize:25, paddingHorizontal:30, color:'blue'}} onPress={() => setTimeModal(false)}>완료</Text>
-                                <DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={time}
-                                    mode={'time'}
-                                    timeZoneOffsetInMinutes={22}
-                                    locale={"ko"}
-                                    display="spinner"
-                                    onChange={onChange_time}
-                                />
-                            </View>
-                        </Modal>
+                    </Pressable>
 
-                    </View>
-                    <View style={{ justifyContent: 'center', height: 50, borderBottomWidth: 1, paddingHorizontal: 10, borderColor:'rgb(232,230,224)'  }}>
-                    <Text style={{color:'rgb(160,160,160)'}}>
-                            서울특별시 송파구 석촌호수로 222
+                    <View style={{ justifyContent: 'center', height: 50, borderBottomWidth: 1, paddingHorizontal: 10, borderColor: 'rgb(232,230,224)' }}>
+                        <Text onPress={() => {
+                            setAddrVisible(true)
+                        }} style={{ color: 'rgb(160,160,160)' }}>
+                            {addr === undefined ? '서울특별시 송파구 석촌호수로 222' : addr}
                         </Text>
+                        <Modal visible={addrVisible}>
+                            <SafeAreaView />
+                            <Pressable onPress={() => setAddrVisible(false)} style={{ justifyContent: 'center', paddingVertical: 10, backgroundColor: 'orange', borderRadius: 10 }}><Text style={{ alignSelf: 'center', color: 'white', fontSize: 18 }}>닫기</Text></Pressable>
+                            <Postcode
+                                style={{ flex: 3 }}
+                                jsOptions={{ animation: true }}
+                                onSelected={data => {
+                                    setAddr(data.address)
+                                    setAddrVisible(false);
+                                }}
+                            />
+                        </Modal>
                     </View>
                     <TextInput
                         style={{ height: 50, borderBottomWidth: 1, paddingHorizontal: 10 , borderColor:'rgb(232,230,224)' }}
@@ -393,9 +526,11 @@ const Order_Inpit = () => {
                 </View>
             </View>
             <View style={{ paddingHorizontal: 10, paddingVertical: 10, borderBottomWidth: 1 }}>
-                <Pressable style={{justifyContent:'center',height:50, backgroundColor:'orange'}}>
-                    <Text style={{alignSelf:'center', color:'white', fontWeight:'bold', fontSize:20}}>결제하기</Text>
-                    </Pressable>
+                <Pressable onPress={()=>{
+                    alert('결제 모듈 완료 후 이동처리');
+                    navigation.navigate('mainPage')}} style={{ justifyContent: 'center', height: 50, backgroundColor: 'orange' }}>
+                    <Text style={{ alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 20 }}>결제하기</Text>
+                </Pressable>
             </View>
 
         </ScrollView>
@@ -403,4 +538,4 @@ const Order_Inpit = () => {
 
 }
 
-export default Order_Inpit;
+export default Order_Input;

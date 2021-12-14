@@ -66,7 +66,10 @@ const Product_Out_Insert_Review = ({ navigation }) => {
         <Pressable onPress={()=>alert("파일첨부")} style={{marginHorizontal:10, justifyContent:'center',width:D_Width*0.2, backgroundColor:'rgb(144,176,89)', height:D_Height*0.05}}><Text style={{alignSelf:'center', color:'white'}}>파일첨부</Text></Pressable>
         <Text/>
 
-        <Pressable onPress={()=>alert("파일첨부")} style={{ marginHorizontal:10, justifyContent:'center', backgroundColor:'rgb(144,176,89)', height:D_Height*0.05}}><Text style={{alignSelf:'center', color:'white'}}>등록</Text></Pressable>
+        <Pressable onPress={()=>{
+            alert('등록완료')
+            navigation.goBack();
+        }} style={{ marginHorizontal:10, justifyContent:'center', backgroundColor:'rgb(144,176,89)', height:D_Height*0.05}}><Text style={{alignSelf:'center', color:'white'}}>등록</Text></Pressable>
     </>
 }
 export default Product_Out_Insert_Review

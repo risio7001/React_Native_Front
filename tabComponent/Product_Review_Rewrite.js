@@ -51,6 +51,8 @@ const Product_Review_Rewrite = ({ navigation }) => {
                 tintColor='rgb(242,242,242)'
                 onFinishRating={setStarRating}
             />
+
+            <Text style={{ alignSelf:'center', fontWeight: 'bold' }}>{starRating}</Text>
         </View>
         <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
             <Text style={{ fontWeight: 'bold' }}>상품평</Text>
@@ -66,7 +68,10 @@ const Product_Review_Rewrite = ({ navigation }) => {
         <Pressable onPress={()=>alert("파일첨부")} style={{marginHorizontal:10, justifyContent:'center',width:D_Width*0.2, backgroundColor:'rgb(144,176,89)', height:D_Height*0.05}}><Text style={{alignSelf:'center', color:'white'}}>파일첨부</Text></Pressable>
         <Text/>
 
-        <Pressable onPress={()=>alert("파일첨부")} style={{ marginHorizontal:10, justifyContent:'center', backgroundColor:'rgb(144,176,89)', height:D_Height*0.05}}><Text style={{alignSelf:'center', color:'white'}}>등록</Text></Pressable>
+        <Pressable onPress={()=>{
+            alert('등록되었습니다.');
+            navigation.goBack()
+        }} style={{ marginHorizontal:10, justifyContent:'center', backgroundColor:'rgb(144,176,89)', height:D_Height*0.05}}><Text style={{alignSelf:'center', color:'white'}}>등록</Text></Pressable>
     </>
 }
 export default Product_Review_Rewrite

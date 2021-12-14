@@ -56,7 +56,10 @@ const Product_More = ({navigation}) => {
             </Pressable>
 
             <Pressable style={styles.box}
-                onPress={()=>alert("로그아웃")}
+                onPress={()=>{
+                    alert("로그아웃되었습니다.")
+                    goNavi("login");
+                }}
             >
                 <Text style={styles.box_text}>로그아웃</Text>
             </Pressable>

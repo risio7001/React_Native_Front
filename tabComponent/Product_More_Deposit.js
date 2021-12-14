@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, TextInput } from 'react-native';
 import LocalSvg from 'react-native-svg/src/LocalSvg';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
@@ -7,10 +7,12 @@ import NumberFormat from 'react-number-format';
 import SelectDropdown from 'react-native-select-dropdown';
 import { accountData } from '../data/accountData';
 import Drop from '../img/dropDownBox.svg';
+// import { TextInput } from 'react-native';
 
 const Product_More_Deposit = ({ navigation }) => {
 
     const [selectAccount, setSelectAccount] = React.useState();
+    const [accountName, setAccountName] = React.useState("플로드");
     const [fee, setFee] = React.useState(0);
 
     return <>
@@ -36,8 +38,10 @@ const Product_More_Deposit = ({ navigation }) => {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginHorizontal: 10 }}>
-                    <Text style={{ borderWidth: 1, alignSelf: 'center', marginHorizontal: 5, paddingVertical: 3, borderColor: 'white', color: 'white' }}>로그아웃</Text>
-                    <Text style={{ borderWidth: 1, alignSelf: 'center', marginHorizontal: 5, paddingVertical: 3, borderColor: 'white', color: 'white' }}>회원정보수정</Text>
+                    <Text onPress={()=>{
+                        alert('로그아웃되었습니다.')
+                        navigation.navigate('login')}} style={{ borderWidth: 1, alignSelf: 'center', marginHorizontal: 5, paddingVertical: 3, borderColor: 'white', color: 'white' }}>로그아웃</Text>
+                    <Text onPress={()=>navigation.navigate('member')} style={{ borderWidth: 1, alignSelf: 'center', marginHorizontal: 5, paddingVertical: 3, borderColor: 'white', color: 'white' }}>회원정보수정</Text>
                 </View>
 
             </View>
@@ -64,7 +68,8 @@ const Product_More_Deposit = ({ navigation }) => {
                             thousandSeparator={true}
                             renderText={formattedValue => <Text style={styles.fee_font}>{formattedValue}</Text>}
                         />
-                        <Text onPress={()=>setFee(10000)} style={fee === 10000 ? styles.select_fee_box_check : styles.select_fee_box}>선택</Text>
+                        <Text onPress={()=>setFee(fee + 10000)} style={styles.select_fee_box}>선택</Text>
+                        {/* fee === 10000 ? styles.select_fee_box_check : styles.select_fee_box */}
                     </View>
                     <View style={styles.select_box}>
                         <NumberFormat
@@ -74,7 +79,7 @@ const Product_More_Deposit = ({ navigation }) => {
                             thousandSeparator={true}
                             renderText={formattedValue => <Text style={styles.fee_font}>{formattedValue}</Text>}
                         />
-                        <Text onPress={()=>setFee(50000)} style={fee === 50000 ? styles.select_fee_box_check : styles.select_fee_box}>선택</Text>
+                        <Text onPress={()=>setFee(fee + 50000)} style={styles.select_fee_box}>선택</Text>
                     </View>
                     <View style={styles.select_box}>
                         <NumberFormat
@@ -84,7 +89,7 @@ const Product_More_Deposit = ({ navigation }) => {
                             thousandSeparator={true}
                             renderText={formattedValue => <Text style={styles.fee_font}>{formattedValue}</Text>}
                         />
-                        <Text onPress={()=>setFee(100000)} style={fee === 100000 ? styles.select_fee_box_check : styles.select_fee_box}>선택</Text>
+                        <Text onPress={()=>setFee(fee + 100000)} style={styles.select_fee_box}>선택</Text>
                     </View>
                     <View style={styles.select_box}>
                         <NumberFormat
@@ -94,7 +99,7 @@ const Product_More_Deposit = ({ navigation }) => {
                             thousandSeparator={true}
                             renderText={formattedValue => <Text style={styles.fee_font}>{formattedValue}</Text>}
                         />
-                        <Text onPress={()=>setFee(1000000)} style={fee === 1000000 ? styles.select_fee_box_check : styles.select_fee_box}>선택</Text>
+                        <Text onPress={()=>setFee(fee + 1000000)} style={styles.select_fee_box}>선택</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: D_Height * 0.05 }}>
@@ -124,12 +129,18 @@ const Product_More_Deposit = ({ navigation }) => {
                             </>
                         }}
                         dropdownIconPosition={"right"}
-                        buttonStyle={{ width:'100%', backgroundColor:'white', borderWidth:1, borderColor:'grey' }}
-                        buttonTextStyle={{ fontSize: 12, color:'grey',textAlign:'left' }}
-                        defaultButtonText="선택하세요"
+                        buttonStyle={{ width: '100%', backgroundColor: 'white', borderWidth: 1, borderColor: 'grey' }}
+                        buttonTextStyle={{ fontSize: 12, color: 'grey', textAlign: 'left' }}
+                        // defaultValueByIndex={accountData[0]}
+                        defaultValue={accountData[0]}
                     />
                     {/* <Text style={{width:'100%', backgroundColor:'white', borderWidth:1, bordercolor:'grey'}}>플로드</Text> */}
-                    <View style={{paddingVertical:D_Height*0.02,backgroundColor:'white',marginVertical:10, borderWidth:1, borderColor:'grey'}}><Text style={{fontSize:14, color:'grey', paddingHorizontal:20}}>플로드</Text></View>
+                    <View style={{ paddingVertical: D_Height * 0.02, backgroundColor: 'white', marginVertical: 10, borderWidth: 1, borderColor: 'grey' }}>
+                        <TextInput style={{ fontSize: 14, color: 'grey', paddingHorizontal: 20 }}
+                            onChangeText={setAccountName}
+                            placeholder={accountName}
+                        />
+                    </View>
                 </View>
                 <Text style={{ fontSize: 20, color: 'white', flex: 1, backgroundColor: 'rgb(237,118,47)', textAlign: 'center', paddingVertical: 10 }}>
                     충전하기
