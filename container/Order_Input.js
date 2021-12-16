@@ -382,12 +382,12 @@ const Order_Input = ({navigation}) => {
                         </Modal>
                         <Pressable onPress={()=>{
                             if(new Date().getHours() <= 12){
-                                setDeliveryNow_H("오전 " + JSON.stringify(new Date().getHours())+"시");
+                                setDeliveryNow_H("오전 " + new Date().getHours()+"시");
                             }else{
-                                setDeliveryNow_H("오후 " + JSON.stringify((new Date().getHours()-12)+"시"));
+                                setDeliveryNow_H("오후 " + (new Date().getHours()-12)+"시");
                             }
                             
-                            setDeliveryNow_M(JSON.stringify(new Date().getMinutes()));
+                            setDeliveryNow_M(new Date().getMinutes()+"분");
                             setDate(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate());
                             drop_H.current.reset();
                             drop_M.current.reset();

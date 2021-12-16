@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, Text, View, Dimensions, Pressable, FlatList, Modal, SafeAreaView, Image, Alert } from 'react-native';
+import { ScrollView, Text, View, Dimensions, Pressable, FlatList, Modal, SafeAreaView, Image, Alert, StyleSheet } from 'react-native';
 import LocalSvg from 'react-native-svg/src/LocalSvg';
 import Arrow from '../img/arrow.svg';
 import XMark from '../img/xMark.svg'
@@ -8,7 +8,7 @@ import { D_Height, D_Width } from '../utils/deviceSize';
 import * as ImagePicker from 'expo-image-picker';
 
 
-const Product_In = ({navigation}) => {
+const Product_In = ({ navigation }) => {
 
     const [toggle, setToggle] = React.useState(1);
     const [isVisible, setIsVisible] = React.useState(false);
@@ -77,13 +77,13 @@ const Product_In = ({navigation}) => {
             case 1: // 접수대기
                 return <>
                     <View>
-                        <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
-                            <Text style={{ alignSelf: 'center' }}>날짜</Text>
+                        <View style={{ width: D_Width, justifyContent: 'space-around', flexDirection: 'row' }}>
+                            <Text style={styles.text_top}>2021-10-12 오후 1:10:34</Text>
                             <Text></Text>
-                            <Text style={{ alignSelf: 'center' }}>일련번호</Text>
+                            <Text style={styles.text_top}>A132487542424575</Text>
                         </View>
 
-                        <View style={{ width: D_Width, height: D_Height * 0.20, flexDirection: 'column' }}>
+                        <View style={{ width: D_Width, flexDirection: 'column' }}>
                             <View style={{ marginHorizontal: 10, borderBottomWidth: 1 }}>
                                 <Text style={{ fontSize: 35, fontWeight: 'bold', textAlign: 'center' }}>2021-10-13 오후 1:46:58</Text>
                                 <Text style={{ alignSelf: 'center' }}>테스트-꽃바구니</Text>
@@ -95,18 +95,18 @@ const Product_In = ({navigation}) => {
             case 2: // 처리중
                 return <>
                     <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
-                        <Text style={{ alignSelf: 'center', fontSize: 12, color: 'grey' }}>2021-10-12 오후 1:10:34</Text>
+                        <Text style={styles.text_top}>2021-10-12 오후 1:10:34</Text>
                         <Text></Text>
-                        <Text style={{ alignSelf: 'center', fontSize: 12, color: 'grey' }}>A132487542424575</Text>
+                        <Text style={styles.text_top}>A132487542424575</Text>
                     </View>
 
-                    <View style={{ width: D_Width, height: D_Height * 0.25, flexDirection: 'column' }}>
+                    <View style={{ width: D_Width, flexDirection: 'column' }}>
                         <View style={{ marginHorizontal: 15, borderBottomWidth: 1 }}>
-                            <Text style={{ fontSize: 18, color: 'grey', fontWeight: 'bold' }}>배송일시 2021.10.12</Text>
+                            <Text style={styles.text_big}>배송일시 2021.10.12</Text>
                             <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 10 }}>배송상세</Text>
-                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>발주자 플로드</Text>
-                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>테스트-3단</Text>
-                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>배송지 서울 영등포구 가마산로 311 (대림동){"\n"}</Text>
+                            <Text style={styles.text_small}>발주자 플로드</Text>
+                            <Text style={styles.text_small}>테스트-3단</Text>
+                            <Text style={styles.text_small}>배송지 서울 영등포구 가마산로 311 (대림동){"\n"}</Text>
 
                             <Pressable onPress={() => _pickImage()} style={{ width: D_Width * 0.2, height: D_Height * 0.06, backgroundColor: 'rgb(144,176,89)', justifyContent: 'center' }}>
                                 {image === undefined ?
@@ -127,21 +127,21 @@ const Product_In = ({navigation}) => {
                 </>
             case 3: // 완료
                 return <>
-                    <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
-                        <Text style={{ alignSelf: 'center', fontSize: 12, color: 'grey' }}>2021-10-12 오후 1:10:34</Text>
+                    <View style={{ width: D_Width, justifyContent: 'space-around', flexDirection: 'row' }}>
+                        <Text style={styles.text_top}>2021-10-12 오후 1:10:34</Text>
                         <Text></Text>
-                        <Text style={{ alignSelf: 'center', fontSize: 12, color: 'grey' }}>A132487542424575</Text>
+                        <Text style={styles.text_top}>A132487542424575</Text>
                     </View>
 
-                    <View style={{ width: D_Width, height: D_Height * 0.25, flexDirection: 'column' }}>
+                    <View style={{ width: D_Width, flexDirection: 'column' }}>
                         <View style={{ marginHorizontal: 15, borderBottomWidth: 1 }}>
-                            <Text style={{ fontSize: 18, color: 'grey', fontWeight: 'bold' }}>배송일시 2021.10.12 오후7시10분</Text>
-                            <Text style={{ fontSize: 18, color: 'grey', fontWeight: 'bold' }}>완료일시 2021.10.12 오후7시10분</Text>
+                            <Text style={styles.text_big}>배송일시 2021.10.12 오후7시10분</Text>
+                            <Text style={styles.text_big}>완료일시 2021.10.12 오후7시10분</Text>
                             <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 10 }}>배송상세 오후7시10분</Text>
-                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>발주자 플로드</Text>
-                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>상품명 테스트</Text>
-                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>배송지 서울 영등포구 가마산로 311 (대림동)</Text>
-                            <Text style={{ color: 'grey', fontWeight: 'bold', paddingTop: 1 }}>인수자 t{"\n"}</Text>
+                            <Text style={styles.text_small}>발주자 플로드</Text>
+                            <Text style={styles.text_small}>상품명 테스트</Text>
+                            <Text style={styles.text_small}>배송지 서울 영등포구 가마산로 311 (대림동)</Text>
+                            <Text style={styles.text_small}>인수자 t{"\n"}</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <Pressable onPress={() => setIsVisible(true)} style={{ width: D_Width * 0.25, height: D_Height * 0.06, backgroundColor: 'rgb(144,176,89)', justifyContent: 'center' }}><Text style={{ alignSelf: 'center', color: 'white' }}>배송사진 보기</Text></Pressable>
                                 <Text>{"  "}</Text>
@@ -163,16 +163,17 @@ const Product_In = ({navigation}) => {
                             <Text></Text>
                         </View>
                     </View>
+                    
                 </>
             default: return <>
                 <View>
-                    <View style={{ width: D_Width, height: D_Height * 0.05, justifyContent: 'space-around', flexDirection: 'row' }}>
+                    <View style={{ width: D_Width, justifyContent: 'space-around', flexDirection: 'row' }}>
                         <Text style={{ alignSelf: 'center' }}>날짜</Text>
                         <Text></Text>
                         <Text style={{ alignSelf: 'center' }}>일련번호</Text>
                     </View>
 
-                    <View style={{ width: D_Width, height: D_Height * 0.20, flexDirection: 'column' }}>
+                    <View style={{ width: D_Width, flexDirection: 'column' }}>
                         <View style={{ marginHorizontal: 10, borderBottomWidth: 1 }}>
                             <Text style={{ fontSize: 35, fontWeight: 'bold', textAlign: 'center' }}>2021-10-13 오후 1:46:58</Text>
                             <Text style={{ alignSelf: 'center' }}>테스트-꽃바구니</Text>
@@ -201,15 +202,87 @@ const Product_In = ({navigation}) => {
 
         <View style={{ width: D_Width, height: D_Height * 0.06, backgroundColor: 'black' }}>
             <View style={{ marginHorizontal: 10, flexDirection: 'row', height: '100%' }}>
-                <Pressable onPress={() => setToggle(1)} style={{ justifyContent: 'center', flex: 1, borderBottomWidth: 5, borderColor: toggle === 1 ? 'rgb(144,176,89)' : "black" }}><Text style={{ alignSelf: 'center',fontWeight: toggle === 1 ? "bold" : "normal",  color: toggle === 1 ? "white" : 'grey' }}>접수대기</Text></Pressable>
-                <Pressable onPress={() => setToggle(2)} style={{ justifyContent: 'center', flex: 1, borderBottomWidth: 5, borderColor: toggle === 2 ? 'rgb(144,176,89)' : "black" }}><Text style={{ alignSelf: 'center',fontWeight: toggle === 1 ? "bold" : "normal", color: toggle === 2 ? "white" : 'grey' }}>처리중</Text></Pressable>
-                <Pressable onPress={() => setToggle(3)} style={{ justifyContent: 'center', flex: 1, borderBottomWidth: 5, borderColor: toggle === 3 ? 'rgb(144,176,89)' : "black" }}><Text style={{ alignSelf: 'center',fontWeight: toggle === 1 ? "bold" : "normal", color: toggle === 3 ? "white" : 'grey' }}>완료</Text></Pressable>
+                <Pressable onPress={() => setToggle(1)} style={[styles.toggles, { borderColor: toggle === 1 ? 'rgb(144,176,89)' : "black" }]}>
+                    <Text style={{ alignSelf: 'center', fontWeight: toggle === 1 ? "bold" : "normal", color: toggle === 1 ? "white" : 'grey' }}>접수대기</Text>
+                    {toggle === 1 ?
+                        <View style={styles.select_toggle}>
+                            <Text style={styles.select_number}>1</Text>
+                        </View>
+                        :
+                        <Text style={styles.number}>1</Text>
+                    }
+                </Pressable>
+                <Pressable onPress={() => setToggle(2)} style={[styles.toggles, { borderColor: toggle === 2 ? 'rgb(144,176,89)' : "black" }]}>
+                    <Text style={{ alignSelf: 'center', fontWeight: toggle === 1 ? "bold" : "normal", color: toggle === 2 ? "white" : 'grey' }}>처리중</Text>
+
+                    {toggle === 2 ?
+                        <View style={styles.select_toggle}>
+                            <Text style={styles.select_number}>1</Text>
+                        </View>
+                        :
+                        <Text style={styles.number}>1</Text>
+                    }</Pressable>
+                <Pressable onPress={() => setToggle(3)} style={[styles.toggles, { borderColor: toggle === 3 ? 'rgb(144,176,89)' : "black" }]}>
+                    <Text style={{ alignSelf: 'center', fontWeight: toggle === 1 ? "bold" : "normal", color: toggle === 3 ? "white" : 'grey' }}>완료</Text>
+
+                    {toggle === 3 ?
+                        <View style={styles.select_toggle}>
+                            <Text style={styles.select_number}>1</Text>
+                        </View>
+                        :
+                        <Text style={styles.number}>1</Text>
+                    }</Pressable>
             </View>
         </View>
-        <View>
-            {/* FlatList */}
-        {setView()}
-        </View>
+        <ScrollView>
+            <View>
+                {/* FlatList */}
+                {setView()}
+            </View>
+        </ScrollView>
     </>
 }
 export default Product_In
+
+const styles = StyleSheet.create({
+    toggles: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flex: 1,
+        borderBottomWidth: 5,
+    },
+    select_toggle: {
+        alignSelf: 'center',
+        backgroundColor: 'rgb(84,165,159)',
+        paddingHorizontal: 5,
+        borderRadius: 3
+    },
+    select_number: {
+        fontWeight: 'bold',
+        color: 'white',
+        fontSize: 12
+    },
+    number: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        color: 'grey',
+        fontSize: 12
+    },
+
+    text_small:{
+        color: 'grey',
+        fontWeight: 'bold',
+        paddingTop: 1 
+    },
+    text_big:{
+        fontSize: 18,
+        color: 'grey',
+        fontWeight: 'bold'
+    },
+    text_top:{
+        alignSelf: 'center',
+        fontSize: 12,
+        color: 'grey',
+        paddingVertical:10
+    }
+})

@@ -14,13 +14,13 @@ import * as ImagePicker from 'expo-image-picker';
 import TabViewComponent from 'react-native-elements/dist/tab/TabView';
 
 // console.log(dongAll);
-let ddd = [];
+let check = [];
 
 const Product_More_Member = ({ navigation }) => {
     const [color, setColor] = React.useState(false);
     const [isModal, setIsModal] = React.useState(false);
     const [file, setFile] = React.useState();
-    const [check, setCheck] = React.useState(false);
+    const [checkPass, setCheckPass] = React.useState(false);
     const [self, setSelf] = React.useState(0);
     const [address, setAddress] = React.useState();
     const [email, setEmail] = React.useState();
@@ -31,22 +31,19 @@ const Product_More_Member = ({ navigation }) => {
     const [account, setAccount] = React.useState();
     const [depositor, setDepositor] = React.useState();
 
-    const [deps_target, setDeps_target] = React.useState(); // 타겟 저장
+    const [target, setTarget] = React.useState(); // 타겟 저장
     const [deps_1, setDeps_1] = React.useState(); // 받아온 1차 주소 데이터 
     const [deps_2, setDeps_2] = React.useState(); // 받아온 2차 주소 데이터 저장
     const [deps_3, setDeps_3] = React.useState(); // 받아온 3차 주소 데이터 저장
     const [cortarNo, setCortarNo] = React.useState(""); // 하위 행정구역 코드 저장
-    const [deps_stack, setDeps_stack] = React.useState();  // 주소 1차
-    const [deps_stack2, setDeps_stack2] = React.useState();  // 주소 2차
-    const [select, setSelect] = React.useState(1);  // 1차 주소지 선택
-    const [select2, setSelect2] = React.useState(1);  // 2차 주소지 선택
+
+    const [select_sido, setSelect_sido] = React.useState(1);  // 1차 주소지 선택
+    const [select_gugun, setSelect_gugun] = React.useState(1);  // 2차 주소지 선택
+
+    const [sido, setSido] = React.useState();// 주소 1차
+    const [gugun, setGugun] = React.useState();// 주소 2차
     const [dongStack, setdongStack] = React.useState(null);  // 3차 주소지 저장
-    const [dongAll, setDongAll] = React.useState();
-    const [chDong, setChDong] = React.useState();
-
     const [totalStack, setTotalStack] = React.useState();  // 배송지 추가하기 버튼 클릭 시 저장되는 곳
-    
-
     const [selectAll, setSelectAll] = React.useState(false);
 
     React.useEffect(() => {
@@ -55,9 +52,6 @@ const Product_More_Member = ({ navigation }) => {
 
     // data 임시저장
     let minData = [];
-    let smallData = [];
-    let totalDong = [];
-    let data = [];
     // data 임시저장
 
     const getMap = async () => {
@@ -65,18 +59,34 @@ const Product_More_Member = ({ navigation }) => {
         await fetch(`https://land.naver.com/childRegionList.nhn?cortarNo=${cortarNo}&&rletTypeCd=A01`)
             .then((res) => res.json())
             .then((json) => {
-
-                switch (deps_target) {
+                switch (target) {
                     case 'gugun':
+                        setDeps_3();
                         return setDeps_2(json.Region);
                     case 'dong':
                         json.Region.forEach((element, index) => {
                             minData.push({
                                 "name": element.cortar_nm,
-                                "code": element.cortar_no,
-                                "select": 'red'
+                                "code": element.cortar_no
                             });
                         });
+                        let temp = [];
+                        if (check.length > 0) {   // 현재 선택된 시/군/구에 해당하는 읍/면/동 검사
+                            for (const i in minData) {
+                                for (const j in check) {
+                                    if (minData[i].code === check[j].code) {  // 현재 선택된 시/군/구에 해당하는 읍면동이 있다면 저장
+                                        temp.push(check[j]);
+                                    }
+                                }
+                            }
+                            if (temp.length < 1) {
+                                setSelectAll(false);
+                            }
+                            else {
+                                setSelectAll(true);
+                            }
+                            setdongStack(temp);
+                        }
 
                         return setDeps_3(minData);
                     default:
@@ -95,10 +105,10 @@ const Product_More_Member = ({ navigation }) => {
             aspect: [4, 3],
         });
         if (!result.cancelled) {
-            if(division === "biz"){
+            if (division === "biz") {
                 return setBizImg(result);
             }
-            else{
+            else {
                 return setShopImg(result);
             }
         }
@@ -107,13 +117,9 @@ const Product_More_Member = ({ navigation }) => {
         }
     };
 
-    React.useEffect(()=>{
-        // console.log(ddd);
-    },[color]);
+    React.useEffect(() => {
 
-    React.useEffect(()=>{
-        // console.log('변경점');
-    },[totalStack]);
+    }, [check, totalStack]);
 
     return <>
         <ScrollView>
@@ -149,11 +155,11 @@ const Product_More_Member = ({ navigation }) => {
                                 size={20}
                                 text="비밀번호변경"
                                 textStyle={{ color: 'black', textDecorationLine: 'none', fontSize: 12, fontWeight: 'bold', marginVertical: 10 }}
-                                iconStyle={{ backgroundColor: check ? 'rgb(144,176,89)' : 'white' }}
+                                iconStyle={{ backgroundColor: checkPass ? 'rgb(144,176,89)' : 'white' }}
                                 disableBuiltInState
-                                isChecked={check}
+                                isChecked={checkPass}
                                 onPress={() => {
-                                    setCheck(!check);
+                                    setCheckPass(!checkPass);
                                 }}
                             />
                         </View>
@@ -383,7 +389,6 @@ const Product_More_Member = ({ navigation }) => {
                         <SelectDropdown
                             data={specialty}
                             onSelect={(selectedItem, index) => {
-                                // console.log(selectedItem3)
                                 setSelf(index);
                                 setEmail(selectedItem);
                             }}
@@ -404,21 +409,18 @@ const Product_More_Member = ({ navigation }) => {
                 <View style={{ width: '100%', height: D_Height * 0.05, borderWidth: 1, borderColor: 'rgb(150,150,150)', marginVertical: 20, justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 15 }}>
                     <Text style={{ alignSelf: 'center' }}>시/도</Text>
                     <LocalSvg asset={Arrow2} width={20} height={20} fill={"#969696"} transform={[{ rotate: '90deg' }]} alignSelf={'center'} />
-                    
+
                 </View>
                 <View style={{ flexWrap: 'wrap', width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
                     <Text>
                         {deps_1 === undefined ? "" : deps_1.map((sido, index) => (
                             <Pressable onPress={() => {
-                                // console.log(data.length);
-                                setDeps_2();
-                                setDeps_3();
-                                setdongStack();
-                                setDeps_stack(sido.cortar_nm);
-                                setDeps_target("gugun");
-                                setCortarNo(sido.cortar_no)
-                                setSelect(index)
-                            }} style={{ borderWidth: select === index ? 2 : 1, borderColor: select === index ? 'red' : 'black', width: D_Width * 0.28, height: D_Height * 0.03, justifyContent: 'center' }} key={index}>
+
+                                setTarget('gugun');
+                                setSelect_sido(index);
+                                setCortarNo(sido.cortar_no);
+                                setSido(sido.cortar_nm);
+                            }} style={{ borderWidth: select_sido === index ? 2 : 1, borderColor: select_sido === index ? 'red' : 'black', width: D_Width * 0.28, height: D_Height * 0.03, justifyContent: 'center' }} key={index}>
                                 <Text style={{ alignSelf: 'center' }}>{sido.cortar_nm}</Text>
                             </Pressable>
                         ))}
@@ -434,11 +436,12 @@ const Product_More_Member = ({ navigation }) => {
                             <Text>
                                 {deps_2 === undefined ? "" : deps_2.map((gugun, index) => (
                                     <Pressable onPress={() => {
-                                        setDeps_target("dong");
-                                        setDeps_stack2(gugun.cortar_nm);
-                                        setCortarNo(gugun.cortar_no)
-                                        setSelect2(index);
-                                    }} style={{ borderWidth: select2 === index ? 2 : 1, borderColor: select2 === index ? 'red' : 'black', width: D_Width * 0.28, height: D_Height * 0.03, justifyContent: 'center' }} key={index}>
+                                        setTarget("dong");
+                                        setGugun(gugun.cortar_nm);
+                                        setCortarNo(gugun.cortar_no);
+                                        setSelect_gugun(index);
+                                        setdongStack();
+                                    }} style={{ borderWidth: select_gugun === index ? 2 : 1, borderColor: select_gugun === index ? 'red' : 'black', width: D_Width * 0.28, height: D_Height * 0.03, justifyContent: 'center' }} key={index}>
                                         <Text style={{ alignSelf: 'center' }}>{gugun.cortar_nm}</Text>
                                     </Pressable>
                                 ))}
@@ -451,21 +454,44 @@ const Product_More_Member = ({ navigation }) => {
                         <View style={{ width: '100%', height: D_Height * 0.05, borderWidth: 1, borderColor: 'rgb(150,150,150)', marginVertical: 20, justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 15 }}>
                             <Text style={{ alignSelf: 'center' }}>읍/면/동</Text>
                             <Pressable onPress={() => {
-                                setSelectAll(!selectAll);
-                                // ddd.
+                                setColor(!color);
 
-                                if (dongStack === undefined || dongStack.length < 1) {
-                                    deps_3.forEach((element) => {
-                                        data.push(element);
-                                        
-                                    })
-                                    setdongStack(data);
+                                let data = [];
+
+                                if (!selectAll) {
+                                    for (const i in deps_3) { // 기존에 선택 됐던 읍/면/동 삭제
+                                        for (let j in check) {
+                                            if (deps_3[i] === check[j]) {
+                                                check.splice(j, 1);
+                                                j--;
+                                            }
+                                        }
+                                    }
+                                    deps_3.forEach((element) => { check.push(element) }); // 시/군/구 하위 행정구역 전부 선택
+
+                                    for (const i in check) {    // 현재 시/군/구에 포함된 읍/면/동 확인 및 저장
+                                        for (const j in deps_3) {
+                                            if (deps_3[j].code === check[i].code) {
+                                                data.push(check[i]);
+                                            }
+                                        }
+                                    }
+                                    setSelectAll(true);
+                                } else {
+                                    for (const i in deps_3) {     // 현재 선택된 읍/면/동 전체 해제
+                                        for (let j in check) {
+                                            if (deps_3[i].code === check[j].code) {
+                                                check.splice(j, 1);
+                                                j--;
+                                            }
+                                        }
+                                    }
+                                    setSelectAll(false);
                                 }
-                                else {
-                                    setdongStack();
-                                }
+
+                                setdongStack(data);     // 현재 선택된 시/군/구에 맞는 읍/면/동 저장
                             }} style={{ justifyContent: 'center' }}>
-                                {selectAll? <Text style={{ alignSelf: 'center' }}>전체해제</Text> :<Text style={{ alignSelf: 'center' }}>전체선택</Text>}
+                                {selectAll ? <Text style={{ alignSelf: 'center' }}>전체해제</Text> : <Text style={{ alignSelf: 'center' }}>전체선택</Text>}
                             </Pressable>
                         </View>
                         <View style={{ flexWrap: 'wrap', width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
@@ -473,46 +499,30 @@ const Product_More_Member = ({ navigation }) => {
                                 {deps_3 === undefined ? "" : deps_3.map((dong, index) => (
                                     <Pressable onPress={() => {
                                         setColor(!color);
-                                        if(ddd.find((element)=>element.code === dong.code)){
-                                            ddd.splice(ddd.findIndex((element)=>element.code === dong.code),1);   // 삭제
-                                            // console.log(ddd.indexOf(dong.code))
-                                            // ddd.forEach((element)=> element.splice(ddd.indexOf(dong.code), 1)) ;  
-                                        }else{
-                                            ddd.push(dong);        // 추가
-                                        }
-                                        if (dongStack === undefined) {
 
-                                            if(data.find((element)=>element.name === dong.name)){
-                                                data.splice(data.indexOf(dong),1);  //삭제
-                                            }else{
-                                                data.push(dong);    //추가
-                                            }
-                                            setdongStack(data);
+                                        let data = [];
+
+                                        if (check.find((element) => element.code === dong.code)) {      // 읍/면/동 중복 체크 
+                                            check.splice(check.findIndex((element) => element.code === dong.code), 1); // 짝수번 클릭 시 선택해제
                                         }
                                         else {
-                                            data = dongStack;
-                                            if(data.find((element)=>element.name === dong.name)){
-                                                data.splice(data.indexOf(dong),1);
-                                            }else{
-                                                data.push(dong);
-                                            }
-                                            setdongStack(data);
+                                            check.push(dong);   // 홀수번 클릭 시 선택 저장
                                         }
-                                        // setDongAll(data.concat(dongAll));
+
+                                        for (const i in check) {
+                                            for (const j in deps_3) {
+                                                if (deps_3[j].code === check[i].code) {
+                                                    data.push(check[i]);
+                                                }
+                                            }
+                                        }
+                                        setdongStack(data);
+
                                     }} style={{ borderWidth: 1, width: D_Width * 0.28, height: D_Height * 0.03, justifyContent: 'center', flexDirection: 'row' }} key={index}>
                                         <Text style={{ alignSelf: 'center' }}>{dong.name}</Text>
                                         {
-                                            // totalStack === undefined ? 
-                                            //          : totalStack.forEach(element=>{ if(element.sigun === deps_stack2 ){return true;}})?
-                                            // <LocalSvg asset={Arrow} width={10} height={10} fill={"#000000"} style={{ backgroundColor: 'red' }} /> :null
-                                            ddd.find(element=>element.code===dong.code) === undefined ? null :
-                                            <LocalSvg asset={Arrow} width={10} height={10} fill={"#000000"} style={{ backgroundColor: 'red' }} />
-
-
-                                            // dongStack === undefined ? null : dongStack.find(element => element.name === dong.name) === undefined ? null :
-                                            //     // <View style={{ width: '10%', paddingLeft: '50%' }}>
-                                            //         <LocalSvg asset={Arrow} width={10} height={10} fill={"#000000"} style={{ backgroundColor: 'red' }} />
-                                            //     // </View>
+                                            check.find(element => element.code === dong.code) === undefined ? null :
+                                                <LocalSvg asset={Arrow} width={10} height={10} fill={"#000000"} style={{ backgroundColor: 'red' }} />
                                         }
                                     </Pressable>
                                 ))}
@@ -521,156 +531,46 @@ const Product_More_Member = ({ navigation }) => {
                     </View>
                 }
                 <Pressable onPress={() => {
-                    // let dddd = [];
-                    // dddd = dddd.concat(totalStack);
-                    if (deps_stack === undefined) {
+                    // console.log(dongStack);
+                    if (sido === undefined) {
                         return alert("시/도 를 선택해주세요");
                     }
-                    else if (deps_stack2 === undefined) {
+                    else if (gugun === undefined) {
                         return alert("시/군/구 를 선택해주세요");
                     }
                     else if (dongStack === undefined || dongStack < 1) {
                         return alert("읍/면/동 을 선택해주세요");
                     }
 
-                    let data_all = [];
-                    let data_temp = [];
-                    let data = [];
-                    
-
-
-                    if(totalStack === undefined){ // 처음 저장 시
-                        data.push({
-                            "sigun": deps_stack + " " + deps_stack2,
+                    let temp = [];
+                    if (totalStack === undefined) { // 배송지 선택 처음일때
+                        temp.push({
+                            "sido": sido + " " + gugun,
                             "dong": dongStack
                         });
-                        
-                        setTotalStack(data);
-                        // console.log("첫 저장 : " + JSON.stringify(data));
-                    }else{ // +2
-                        // let data123 = [];
-                        // console.log("test111111111111111");
-                        // data123 = data.concat(totalStack);
-                        // console.log(data123.dong);
-                        data=totalStack;
-                        console.log("test22222222");
-                        console.log(data.dong);
-                        // console.log("" + data.find((element)=>element.sigun === deps_stack + " " + deps_stack2));
-                        if(data.find((element)=>element.sigun === deps_stack + " " + deps_stack2)){ // 같은 이름의 sigun이 있는지 검증
-                            // console.log('test3333333333');
-                            // console.log(data.dong);
-                            data[0].dong.splice(0);
-                            ddd.forEach((element)=>data[0].dong.push(element));
-                            // data[0].dong.push(ddd[0]);
-                            // console.log(data);
-                            // 있다면 splice로 바꾸기
-                            // console.log(" 중복된 sigun " + JSON.stringify(data));
-                            // data[0].dong.splice(0);
-                            // data[0].dong
-                            // console.log(data[0].dong);
-                            // console.log(data.dong);
+                        setTotalStack(temp);
+                    }
+                    else {       // 입력된 배송지가 존재 할 때
 
-                            // data[0].dong.
-                            // console.log(data[0].dong.name = 'xptmxm');
-                            // data.dong.splice(data.indexOf(deps_stack + " " + deps_stack2), 1, )
-                            // console.log("추가 : " + data);
+                        temp = temp.concat(totalStack);
+                        let obj = temp.find((element) => element.sido === sido + " " + gugun);
+                        if (obj) {// 배송지 선택 시 같은 시군구가 존재할때
+
+                            if (obj.dong === dongStack) {
+                            }
+                            else {   // 변경사항 적용이 안됐을때 적용
+                                obj.dong = dongStack;
+                            }
+                            setTotalStack(temp);    // 전체 데이터에 저장 및 랜더링
                         }
                         else {
-                            // 없다면 새롭게 push
-                            data.push({
-                                "sigun": deps_stack + " " + deps_stack2,
+                            temp.push({ // 같은 시/군/구 가 존재하지 않을 때 새롭게 저장
+                                "sido": sido + " " + gugun,
                                 "dong": dongStack
                             });
-                            // console.log("없어서 저장 : " + JSON.stringify(data));
+                            setTotalStack(temp);    // 전체 데이터에 저장
                         }
-                        // console.log(data);
-                        setTotalStack(data);
                     }
-                    // console.log(data);
-                    // setDeps_2();
-                    // setDeps_3();
-                    // setDeps_target();
-                    // setdongStack();
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    // console.log(dddd);
-                    // console.log("check : " + smallData.find((element)=>element.sigun === deps_stack + ' ' + deps_stack2));
-                    // if (totalStack === undefined) {
-                    //     smallData.push({
-                    //         "sigun": deps_stack + " " + deps_stack2,
-                    //         "dong": dongStack
-                    //     });
-                    //     setTotalStack(smallData);
-                    // }
-                    // else {
-                    //     // console.log('check : ' + );
-                    //     let temp = [];
-                    //     temp = dddd.find((element)=>element.sigun === deps_stack + ' ' + deps_stack2);
-                    //     // console.log(temp);
-                        
-                    //     // console.log(dddd.find((element)=>element.sigun === deps_stack + ' ' + deps_stack2));
-                    //     if(temp){ // 같은 항목이 존재할 경우
-                    //         // temp.dong.forEach(element=>console.log(element.code));
-                    //         // temp.dong.forEach(element=>element.code === dongStack.code);
-                    //         // setdongStack(ddd)
-                    //         dddd.slice(dddd.indexOf(deps_stack + ' ' + deps_stack2), 1, {
-                    //             "sigun": deps_stack + " " + deps_stack2,
-                    //             "dong": ddd
-                    //         })
-                    //         console.log(dddd);
-
-
-                    //         // let temp2 = [];
-
-                    //         // dongStack.forEach((element)=>temp.dong.push(element));
-                    //         // console.log(temp.dong.length);
-                    //         // for(const i in temp.dong){
-                                
-                    //         // }
-                    //         // console.log(ddd);
-                    //         // temp.dong
-                    //         // temp.dong.forEach((element)=>console.log(element.code === ddd));
-                    //         // temp.dong.find((element)=>console.log(element.code === ddd));
-                    //         // for(var i=0; i<= temp.dong.length; i++){
-                    //         //     if(temp.dong[i].code === dongStack.forEach((element)=>element.code)){
-                    //         //         temp.dong.splice(i, 1);
-                    //         //         console.log(temp);
-                    //         //     }
-                    //         //     else{
-
-                    //         //     }
-                    //         // }
-
-                    //         // 중복제거 작업 필요
-
-
-
-                    //         // temp.dong.forEach((element)=>element.name === dongStack)
-                    //         // temp.dong.forEach((element)=>{
-                    //         //     if(!temp)
-                    //         // })
-                    //         // temp.dong.push(dongStack);
-
-                    //         // console.log(temp);
-
-                    //         // console.log(temp);
-                    //         // dongStack.forEach(element=>{element.code === temp.dong.forEach});
-                            
-                    //         // console.log(dddd.length);
-                    //     }else{
-                    //         console.log("fail : ");
-                    //         smallData.push({
-                    //             "sigun": deps_stack + " " + deps_stack2,
-                    //             "dong": dongStack
-                    //         });
-                    //     }
-                    //     totalDong = smallData.concat(totalStack);
-                    //     setTotalStack(totalDong);
-                        
-                    // }
-                    // setDeps_2();
-                    // setDeps_3();
-                    // setDeps_target();
-                    // setdongStack();
                 }
                 } style={{ width: '40%', height: D_Height * 0.05, borderWidth: 1, borderColor: 'rgb(209,209,211)', marginVertical: 10 }}>
                     <View style={{ paddingHorizontal: 10, flexDirection: 'row', height: '100%', justifyContent: 'center' }}>
@@ -683,50 +583,54 @@ const Product_More_Member = ({ navigation }) => {
                     <Text>{totalStack === undefined ? "" : totalStack.map((total, index) =>
                         <View style={{ flexDirection: 'column', width: D_Width * 0.9 }} key={index} >
                             <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
-                                <Text style={{ fontSize: 16 }}>{total.sigun}</Text>
+                                <Text style={{ fontSize: 16 }}>{total.sido}</Text>
                                 <Text onPress={() => {
                                     let deleteTotal = [];
+                                    let tempDong = [];
                                     deleteTotal = deleteTotal.concat(totalStack);
+                                    // 삭제 할 시/군/구에 포함되어 있는 읍/면/동 가져오기
+                                    deleteTotal[index].dong.forEach((element) => tempDong.push(element));
+                                    // 시/군/구 삭제 시 포함 되어있는 읍/면/동 찾아서 삭제
+                                    for (const i in tempDong) {
+                                        for (const j in check) {
+                                            if (tempDong[i].code === check[j].code) {
+                                                check.splice(j, 1);
+                                            }
+                                        }
+                                    }
+                                    // 시/군/구 삭제
                                     deleteTotal.splice(index, 1);
-                                    // ddd.splice(ddd.findIndex((element)=>element.))
+                                    setdongStack();
                                     setTotalStack(deleteTotal);
+                                    setSelectAll(false);
                                 }} style={{ fontSize: 22, lineHeight: 21 }}> x{"\n"}</Text>
                             </View>
-                            <Text>{total.dong.map((dong, index) =>
+                            <Text style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{total.dong.map((dong, index) =>
                                 <View key={index} style={{ flexDirection: 'row' }}>
                                     <Text key={index}>{dong.name}</Text>
-                                    <Text
-                                        onPress={() => {
-                                            console.log(dong);
-                                            console.log(dong.code);
-                                            let temp = [];
-                                            let temp2 = [];
-                                            temp = temp.concat(totalStack); 
-                                            console.log(temp);
-                                            temp2 = temp.find((element)=>element.sigun === total.sigun).dong;
-                                            temp2.splice((temp2.findIndex((element)=>element.code === dong.code)), 1);
-                                            ddd.splice((ddd.findIndex((element)=>element.code === dong.code)),1);
-                                            setTotalStack(temp);
-                                            // alert('준비중');
-                                            // let deleteDong = [];
-                                            // let temp = [];
-                                            // deleteDong = deleteDong.concat(totalStack);
-                                            // temp = deleteDong.find(element=>element.sigun === total.sigun).dong;
-                                            // ddd.splice(ddd.findIndex(temp.code),1);
-                                            // temp.splice(index, 1);
-                                            // deleteDong.slice(deleteDong.indexOf(total.sigun), 1, temp);
-                                            
-                                            // if(temp.length < 1){
-                                            //     deleteDong.splice(deleteDong.indexOf(total.sigun), 1);
-                                            // }
-                                            // setTotalStack(deleteDong);
-                                        }}
-                                        style={{ lineHeight: 14 }}
-                                    >x{"  "}</Text>
+                                    <View style={{ justifyContent: 'center' }}>
+                                        <Text
+                                            onPress={() => {
+                                                let temp = [];
+                                                let temp2 = [];
+                                                temp = temp.concat(totalStack);
+                                                temp2 = temp.find((element) => element.sido === total.sido).dong;
+                                                temp2.splice((temp2.findIndex((element) => element.code === dong.code)), 1);
+                                                check.splice((check.findIndex((element) => element.code === dong.code)), 1);
+                                                if (temp2.length < 1) {
+                                                    temp.splice(temp.findIndex((element) => element.sido === total.sido), 1);
+                                                }
+                                                setdongStack(temp2);
+                                                setTotalStack(temp);
+                                            }}
+                                            style={{ paddingHorizontal: 3 }}
+                                        >X{" "}</Text></View>
                                 </View>
-                            )}{"\n"}</Text>
+                            )}{"\n"}
+                            </Text>
                         </View>
-                    )}</Text>
+                    )}
+                    </Text>
                 </View>
 
                 <Text style={{ fontSize: 18, fontWeight: 'bold', paddingVertical: 10 }}>정산계좌</Text>
@@ -736,7 +640,7 @@ const Product_More_Member = ({ navigation }) => {
                     onSelect={(selectedItem3, index) => {
                         // setBank(selectedItem3);
                     }}
-                    buttonStyle={{ marginTop:15, width: '100%', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, borderColor: 'rgb(209,209,211)' }}
+                    buttonStyle={{ marginTop: 15, width: '100%', justifyContent: 'center', alignSelf: 'center', borderWidth: 1, borderColor: 'rgb(209,209,211)' }}
                     buttonTextStyle={{ fontSize: 15 }}
                     defaultButtonText="::은행선택::"
                 />
@@ -824,13 +728,4 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         fontWeight: 'bold'
     }
-    // left_box_text:{
-    // },
-    // left_box:{
-    //     flexDirection:'row',
-    //     borderBottomWidth:1,
-    //     borderColor:'grey',
-    //     paddingVertical: 20,
-    //     paddingHorizontal:10
-    // },
 })
