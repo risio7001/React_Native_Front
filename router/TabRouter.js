@@ -30,6 +30,7 @@ import Product_More_CS_Modify from '../tabComponent/Product_More_CS_Modify';
 import Product_More_CS_FAQ from '../tabComponent/Product_More_CS_FAQ';
 import Product_More_CS_Write from '../tabComponent/Product_More_CS_Write';
 import TestTab from '../tabComponent/TestTab';
+import TestTab_button from '../tabComponent/TestTab_button';
 
 const TabRouter = () => {
 
@@ -41,10 +42,10 @@ const TabRouter = () => {
             <Stack.Navigator screenOptions={{
                 headerShown: false,
             }}>
-            <Stack.Screen name="test" component={TestTab}/>
+            {/* <Stack.Screen name="test" component={TestTab_button}/> */}
                 {/* <Stack.Screen name="idHelp" component={IdHelp} /> */}
             
-                <Stack.Screen name="login" component={Login} />
+                {/* <Stack.Screen name="login" component={Login} /> */}
                 <Stack.Screen name="order" component={Order_Input} />
                 <Stack.Screen name="mainPage" component={MainPage} />
                 <Stack.Screen name="productList" component={Product_1} />

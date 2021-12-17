@@ -11,9 +11,7 @@ import Postcode from '@actbase/react-daum-postcode';
 import { SafeAreaView } from 'react-native';
 import Arrow2 from '../img/arrow2.svg';
 import * as ImagePicker from 'expo-image-picker';
-import TabViewComponent from 'react-native-elements/dist/tab/TabView';
 
-// console.log(dongAll);
 let check = [];
 
 const Product_More_Member = ({ navigation }) => {
@@ -603,12 +601,12 @@ const Product_More_Member = ({ navigation }) => {
                                     setdongStack();
                                     setTotalStack(deleteTotal);
                                     setSelectAll(false);
-                                }} style={{ fontSize: 22, lineHeight: 21 }}> x{"\n"}</Text>
+                                }} 
+                                style={{ paddingHorizontal:3 }}> X{" \n"}</Text>
                             </View>
                             <Text style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{total.dong.map((dong, index) =>
-                                <View key={index} style={{ flexDirection: 'row' }}>
+                                <Text key={index} style={{ flexDirection: 'row' }}>
                                     <Text key={index}>{dong.name}</Text>
-                                    <View style={{ justifyContent: 'center' }}>
                                         <Text
                                             onPress={() => {
                                                 let temp = [];
@@ -624,8 +622,8 @@ const Product_More_Member = ({ navigation }) => {
                                                 setTotalStack(temp);
                                             }}
                                             style={{ paddingHorizontal: 3 }}
-                                        >X{" "}</Text></View>
-                                </View>
+                                        >X{"   "}</Text>
+                                </Text>
                             )}{"\n"}
                             </Text>
                         </View>

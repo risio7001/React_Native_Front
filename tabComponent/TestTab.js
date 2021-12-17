@@ -348,10 +348,10 @@ const TestTab = () => {
                             }} 
                             style={{ paddingHorizontal:3 }}> X{" \n"}</Text>
                         </View>
-                        <Text style={{flexDirection:'row', flexWrap:'wrap'}}>{total.dong.map((dong, index) =>
-                            <View key={index} style={{ flexDirection: 'row', paddingVertical:3 }}>
-                                <Text key={index}>{dong.name}</Text>
-                                <View style={{ justifyContent:'center'}}>
+                        <Text style={{flexDirection:'row'}}>{total.dong.map((dong, index) =>
+                            <Text  style={{ flexDirection: 'row'}}>
+                                <Text >{dong.name}</Text>
+                                
                                 <Text
                                     onPress={() => {
                                         let temp = [];
@@ -370,8 +370,8 @@ const TestTab = () => {
                                         setTotalStack(temp);
                                     }}
                                     style={{ paddingHorizontal:3 }}
-                                >X{" "}</Text></View>
-                            </View>
+                                >X{"  "}</Text>
+                            </Text>
                         )}{"\n"}
                         </Text>
                     </View>

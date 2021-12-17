@@ -2,13 +2,7 @@ import * as React from 'react';
 import { View, Text, TextInput, Button, Pressable, ScrollView, Image } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { D_Height, D_Width } from "../utils/deviceSize";
-import db from '../config.json';
 import axios, { Axios } from 'axios';
-// stand-alone 버전(배포)일땐 expo-google-sign-in으로 교체 필요 
-// expo 로컬 테스트시에만 사용
-import * as Google from 'expo-google-app-auth'; 
-
-
 // import 
 const TestPage = ({navigation}) => {
 
