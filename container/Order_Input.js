@@ -9,9 +9,6 @@ import CalendarMark from '../img/calendarMark.svg';
 import NumberFormat from 'react-number-format';
 import Search from '../img/searchMark.svg';
 import SelectDropdown from 'react-native-select-dropdown'
-import * as ImagePicker from 'expo-image-picker';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-import Picker from 'react-native-date-picker';
 import { orderData_E, orderData_H, orderData_M } from '../data/orderData';
 import { Calendar, CalendarList, Agenda, LocaleConfig } from 'react-native-calendars';
 import Postcode from '@actbase/react-daum-postcode';

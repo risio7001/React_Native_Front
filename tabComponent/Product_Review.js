@@ -12,6 +12,7 @@ const Product_Review = ({navigation}) => {
 
     const [toggle, setToggle] = React.useState(1);
     const [starValue, setStarValue] = React.useState(5);
+    const [isComment, setIsComment] = React.useState(true);
 
     const data = {
         "id":"test",
@@ -54,6 +55,10 @@ const Product_Review = ({navigation}) => {
                             <Pressable onPress={()=>Alert.alert("알림", "수정하시겠습니까?", [{text:"취소"}, {text:"확인", onPress:()=>navigation.navigate("ReviewRewrite")}])} style={{backgroundColor: 'rgb(178,171,154)', paddingVertical:10, paddingHorizontal:10, marginHorizontal:5}}><Text style={{color:'white'}}>수정</Text></Pressable>
                             <Pressable onPress={()=>Alert.alert("알림", "삭제하시겠습니까?", [{text:"취소"}, {text:"확인", onPress:()=>alert("삭제")}])} style={{backgroundColor: 'rgb(178,171,154)', paddingVertical:10, paddingHorizontal:10, marginHorizontal:5}}><Text style={{color:'white'}}>삭제</Text></Pressable>
                         </View>
+                        <View style={{backgroundColor:'rgb(229,229,229) ', paddingVertical:10, paddingHorizontal:10, marginVertical:10}}>
+                            <Text style={{fontSize:12}}>(주)플로드</Text>
+                            <Text style={{fontSize:12}}>test</Text>
+                        </View>
                     </View>
                 </>
             case 2:
@@ -86,19 +91,20 @@ const Product_Review = ({navigation}) => {
                             <Text style={{ color: 'grey', paddingTop: 2, flex: 1, letterSpacing: 5 }}>배송지</Text><Text style={{ flex: 5 }}>서울 영등포구 가마산로 311 (대림동) 123123-1</Text>
                         </View>
                         <Text />
-                        {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor:'rgb(229,229,229)', paddingHorizontal:20, paddingVertical:10 }}>
-                            
-                            <View>
-                                <Text>(주)플로드</Text>
-                                <Text>test</Text>
+                        {isComment ?
+                            <View style={{ backgroundColor: 'rgb(229,229,229) ', paddingVertical: 10, paddingHorizontal: 10, marginVertical: 10, justifyContent:'space-between', flexDirection:'row' }}>
+                                <View>
+                                    <Text style={{ fontSize: 12 }}>(주)플로드</Text>
+                                    <Text style={{ fontSize: 12 }}>test</Text>
+                                </View>
+                                <Text onPress={() => navigation.navigate("ReviewRewrite")} style={{backgroundColor:'rgb(178,171,154)', color:'white', alignSelf:'center',paddingVertical:5, paddingHorizontal:10, marginHorizontal:10}}>수정</Text>
                             </View>
-                            <Pressable style={{ backgroundColor: 'rgb(178,171,154)' }}>
-                                <Text style={{ marginHorizontal: 10, marginVertical: 10, color:'white' }}>수정</Text>
-                            </Pressable>
-                        </View> */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
-                        <Pressable onPress={() =>navigation.navigate("ReviewRewrite")} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 20, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>댓글 달기</Text></Pressable>
-                        </View>
+                            :
+                            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                            <Pressable onPress={() => navigation.navigate("ReviewRewrite")} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 20, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>댓글 달기</Text></Pressable>
+                            </View>
+                            }
+                            
                     </View>
                 </>
         }
