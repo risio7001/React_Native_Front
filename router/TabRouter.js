@@ -9,9 +9,7 @@ import Product_1 from '../container/Product_1';
 import Product_2 from '../container/Product_2';
 import { StyleSheet } from 'react-native';
 import MainPage from '../container/MainPage';
-import Login from '../container/Login';
 import SignUp from '../container/SignUp';
-import * as ImagePicker from 'expo-image-picker';
 import IdHelp from '../container/IdHelp';
 import PassHelp from '../container/PassHelp';
 import SignUpTerms from '../container/SignUp_Terms';
@@ -31,6 +29,7 @@ import Product_More_CS_FAQ from '../tabComponent/Product_More_CS_FAQ';
 import Product_More_CS_Write from '../tabComponent/Product_More_CS_Write';
 import TestTab from '../tabComponent/TestTab';
 import TestTab_button from '../tabComponent/TestTab_button';
+import Order_Check from '../container/Order_Check';
 
 const TabRouter = () => {
 
@@ -46,8 +45,9 @@ const TabRouter = () => {
                 {/* <Stack.Screen name="idHelp" component={IdHelp} /> */}
             
                 {/* <Stack.Screen name="login" component={Login} /> */}
-                <Stack.Screen name="order" component={Order_Input} />
                 <Stack.Screen name="mainPage" component={MainPage} />
+                <Stack.Screen name="orderCheck" component={Order_Check} />
+                <Stack.Screen name="order" component={Order_Input} />
                 <Stack.Screen name="productList" component={Product_1} />
                 <Stack.Screen name="productDetail" component={Product_2} />
                 <Stack.Screen name="signUpTerms" component={SignUpTerms} />
