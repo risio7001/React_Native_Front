@@ -10,6 +10,7 @@ import Product_2 from '../container/Product_2';
 import { StyleSheet } from 'react-native';
 import MainPage from '../container/MainPage';
 import SignUp from '../container/SignUp';
+import Login from '../container/Login';
 import IdHelp from '../container/IdHelp';
 import PassHelp from '../container/PassHelp';
 import SignUpTerms from '../container/SignUp_Terms';
@@ -30,6 +31,9 @@ import Product_More_CS_Write from '../tabComponent/Product_More_CS_Write';
 import TestTab from '../tabComponent/TestTab';
 import TestTab_button from '../tabComponent/TestTab_button';
 import Order_Check from '../container/Order_Check';
+import Product_More_Words from '../tabComponent/Product_More_Words';
+import TestTab_checkBox from '../tabComponent/TestTab_checkBox';
+import Product_Out_Before_Detail from '../tabComponent/Product_Out_Before_Datail';
 
 const TabRouter = () => {
 
@@ -43,8 +47,8 @@ const TabRouter = () => {
             }}>
             {/* <Stack.Screen name="test" component={TestTab_button}/> */}
                 {/* <Stack.Screen name="idHelp" component={IdHelp} /> */}
-            
-                {/* <Stack.Screen name="login" component={Login} /> */}
+                {/* <Stack.Screen name="testCheck" component={TestTab_checkBox} /> */}
+                <Stack.Screen name="login" component={Login} />
                 <Stack.Screen name="mainPage" component={MainPage} />
                 <Stack.Screen name="orderCheck" component={Order_Check} />
                 <Stack.Screen name="order" component={Order_Input} />
@@ -76,6 +80,7 @@ const TabRouter = () => {
             }}>
                 <Stack.Screen name="pushMain" component={Product_Out}/>
                 <Stack.Screen name="pushDetail" component={Product_Out_Detail}/>
+                <Stack.Screen name="pushBeforeDetail" component={Product_Out_Before_Detail}/>
                 <Stack.Screen name="pushReview" component={Product_Out_Insert_Review}/>
             </Stack.Navigator>
         </>
@@ -106,6 +111,7 @@ const TabRouter = () => {
                 <Stack.Screen name="csFAQ" component={Product_More_CS_FAQ}/>
                 <Stack.Screen name="csWrite" component={Product_More_CS_Write}/>
                 <Stack.Screen name="member" component={Product_More_Member}/>
+                <Stack.Screen name="words" component={Product_More_Words} />
             </Stack.Navigator>
         </>
     }

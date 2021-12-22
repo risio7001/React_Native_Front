@@ -47,7 +47,7 @@ const Product_1 = ({navigation, route}) => {
         } catch (err) {
             console.log(err)
         }
-        }
+    }
     const MainListItem = ({ items }) => {
         return <>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: (deviceWidth * 0.95), paddingBottom: 8 }}>

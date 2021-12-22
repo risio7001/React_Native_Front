@@ -7,13 +7,13 @@ import Arrow from '../img/arrow.svg';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Api from '../config.json';
 
-const Product_Out_Detail = ({navigation}) => {
+const Product_Out_Before_Detail = ({navigation}) => {
 
     const [data, setData] = React.useState("");
 
     const route = useRoute();
 
-    let guid = route.params.Uid;
+    // let guid = route.params.Uid;
 
     const _getData = async() => {
         let url = `${Api.naviPushDetail}${guid}`
@@ -50,89 +50,56 @@ const Product_Out_Detail = ({navigation}) => {
                         <Text>발주꽃집</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white' }}>
-                        <Text>{data.DealerName}</Text>
+                        {/* <Text>{data.DealerName }</Text> */}
                     </View>
                 </View>
                 <View style={{ borderWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
                     <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
-                        <Text>연락처</Text>
+                        <Text>꽃집 연락처</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.OrdMobile}</Text>
+                        {/* <Text>{data.OrdMobile}</Text> */}
                     </View>
                 </View>
-            </View>
 
-            <Text />
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 10, marginHorizontal: 10 }}>리본문구</Text>
-            <View style={{ marginHorizontal: 10 }}>
-                <View style={{ borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
-                    <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
-                        <Text>경조사어</Text>
-                    </View>
-                    <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.OrderMemo1}</Text>
-                    </View>
-                </View>
-                <View style={{ borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
-                    <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
-                        <Text>보내시는분</Text>
-                    </View>
-                    <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.OrderMemo2}</Text>
-                    </View>
-                </View>
                 <View style={{ borderWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
-                    <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
-                        <Text>카드메세지</Text>
-                    </View>
-                    <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.OrderMemo3}</Text>
-                    </View>
-                </View>
-            </View>
-
-            <Text />
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginVertical: 10, marginHorizontal: 10 }}>배송정보</Text>
-            <View style={{ marginHorizontal: 10 }}>
-                <View style={{ borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
                     <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
                         <Text>받는사람</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.RcvName}</Text>
+                        {/* <Text>{data.OrdMobile}</Text> */}
                     </View>
                 </View>
-                <View style={{ borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
+                <View style={{ borderWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
                     <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
                         <Text>연락처</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.RcvMobile}</Text>
+                        {/* <Text>{data.OrdMobile}</Text> */}
                     </View>
                 </View>
-                <View style={{ borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
+                <View style={{ borderWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
                     <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
                         <Text>배송일시</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.rcvDate} {data.eventTime} {data.eventMinute}</Text>
+                        {/* <Text>{data.OrdMobile}</Text> */}
                     </View>
                 </View>
-                <View style={{ borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
+                <View style={{ borderWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
                     <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
                         <Text>배송상세</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.OrderMemo1}</Text>
+                        {/* <Text>{data.OrdMobile}</Text> */}
                     </View>
                 </View>
-                <View style={{ borderTopWidth: 1, borderRightWidth: 1, borderLeftWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
+                <View style={{ borderWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
                     <View style={{ flex: 1, backgroundColor: 'rgb(224,224,224)', paddingVertical: 15, paddingLeft: 10 }}>
                         <Text>주소</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text>{data.RcvAddr}{data.RcvAddrDetail}</Text>
+                        {/* <Text>{data.OrdMobile}</Text> */}
                     </View>
                 </View>
                 <View style={{ borderWidth: 1, flexDirection: 'row', borderColor: 'grey' }}>
@@ -140,10 +107,13 @@ const Product_Out_Detail = ({navigation}) => {
                         <Text>기타요청사항</Text>
                     </View>
                     <View style={{ flex: 2, paddingVertical: 15, paddingLeft: 10, backgroundColor: 'white'  }}>
-                        <Text></Text>
+                        {/* <Text>{data.OrdMobile}</Text> */}
                     </View>
                 </View>
             </View>
+
+            <Text />
+            
             
 
             <Text />
@@ -153,7 +123,7 @@ const Product_Out_Detail = ({navigation}) => {
                         <Text>상품가격</Text>
                     </View>
                     <View style={{ width: "45%", flexDirection: 'column', justifyContent: 'center' }}>
-                        <NumberFormat value={data.price} displayType={'text'} thousandSeparator={true} suffix={'원'} renderText={pay => <Text style={{ textAlign: 'right' }}>{pay}</Text>} />
+                        {/* <NumberFormat value={data.price} displayType={'text'} thousandSeparator={true} suffix={'원'} renderText={pay => <Text style={{ textAlign: 'right' }}>{pay}</Text>} /> */}
                     </View>
                 </View>
                 <View style={{ justifyContent: 'center', flexDirection: 'row', paddingVertical: 10 }}>
@@ -161,7 +131,7 @@ const Product_Out_Detail = ({navigation}) => {
                         <Text>수량</Text>
                     </View>
                     <View style={{ width: "45%", flexDirection: 'column', justifyContent: 'center' }}>
-                        <Text style={{ textAlign: 'right' }}>{data.ea}</Text>
+                        {/* <Text style={{ textAlign: 'right' }}>{data.ea}</Text> */}
                     </View>
                 </View>
             </View>
@@ -171,7 +141,7 @@ const Product_Out_Detail = ({navigation}) => {
                         <Text style={{fontWeight:'bold'}}>합계</Text>
                     </View>
                     <View style={{ width: "45%", flexDirection: 'column', justifyContent: 'center' }}>
-                        <NumberFormat value={data.price * data.ea} displayType={'text'} thousandSeparator={true} suffix={'원'} renderText={pay => <Text style={{ textAlign: 'right', color:'rgb(217,112,45)' }}>{pay}</Text>} />
+                        {/* <NumberFormat value={data.price * data.ea} displayType={'text'} thousandSeparator={true} suffix={'원'} renderText={pay => <Text style={{ textAlign: 'right', color:'rgb(217,112,45)' }}>{pay}</Text>} /> */}
                     </View>
                 </View>
             </View>
@@ -181,4 +151,4 @@ const Product_Out_Detail = ({navigation}) => {
         </ScrollView>
     </>
 }
-export default Product_Out_Detail
+export default Product_Out_Before_Detail

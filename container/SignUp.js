@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, Pressable, ScrollView, TextInput, Modal, SafeAreaView } from 'react-native';
+import { View, Text, Pressable, ScrollView, TextInput, Modal, SafeAreaView, Alert } from 'react-native';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
 import Arrow2 from '../img/arrow2.svg';
@@ -347,7 +347,7 @@ const SignUp = ({ navigation }) => {
                 method:'post',
                 data:fb
             })
-            return alert('가입신청이 완료 되었습니다.\n본사 승인시 이용이 가능합니다.')
+            return Alert.alert('알림','정상적으로 신청접수되었습니다.\n\n입점신청해 주셔서 감사드리며, 확인후 결과를 통보해 드리겠습니다.\n기타문의사항은 02-522-8200으로 연락주시기 바랍니다.',[{text:'확인', onPress:()=>navigation.navigate('mainPage')}])
             // console.log('완료');
         }catch(err){
             console.log(err);
@@ -988,7 +988,7 @@ const SignUp = ({ navigation }) => {
             <View style={{ width: '100%', height: D_Height * 0.1 }}>
                 <Pressable onPress={()=>{
                     submitSignUp()
-                }} style={{ paddingHorizontal: 10, flexDirection: 'row', height: '100%', justifyContent: 'center', alignItems: 'center', borderRadius: 5, backgroundColor: 'rgb(177,171,156)' }}>
+                }} style={{ paddingHorizontal: 10, flexDirection: 'row', paddingVertical:10, justifyContent: 'center', alignItems: 'center', borderRadius: 5, backgroundColor: 'rgb(177,171,156)' }}>
                     <Text style={{ fontSize: 15, color: 'white' }}>
                         가입하기
                     </Text>

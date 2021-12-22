@@ -32,6 +32,12 @@ const Product_More = ({navigation}) => {
             </Pressable>
 
             <Pressable style={styles.box}
+                onPress={()=>goNavi("words")}
+            >
+                <Text style={styles.box_text}>리본문구관리</Text>
+            </Pressable>
+
+            <Pressable style={styles.box}
                 onPress={()=>goNavi("notice")}
             >
                 <Text style={styles.box_text}>공지사항</Text>
