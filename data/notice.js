@@ -53,7 +53,6 @@ export const FAQ = [
 const styles = StyleSheet.create({
     font: {
         color: 'grey',
-
     },
     font_bold: {
         color: 'grey',

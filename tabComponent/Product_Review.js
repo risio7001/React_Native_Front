@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Pressable, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import { ScrollView, Text } from 'react-native';
 import { D_Height, D_Width } from '../utils/deviceSize';
 import { Rating } from 'react-native-ratings';
@@ -14,7 +14,6 @@ const Product_Review = ({ navigation }) => {
     const [isComment, setIsComment] = React.useState(true);
     const [page, setPage] = React.useState(1);
     const [list, setList] = React.useState([]);
-    const [first, setFirst] = React.useState(false);
 
     const handleToggle = (t) => { //  상단 탭으로 바꿧을 경우 
         setList([]);
@@ -22,7 +21,7 @@ const Product_Review = ({ navigation }) => {
         setPage(1);
     }
 
-    const _getData = () => {
+    const _getData = () => {    // 리스트 가져오기
         let url = `${Api.naviReviewList}${toggle}/?page=${page}&userid=flroad`;
         fetch(url)
             .then((res) => res.json())
@@ -31,24 +30,27 @@ const Product_Review = ({ navigation }) => {
                     setList([...list, ...res.data]);
                     setPage(page + 1);
                 }
-                // let temp = [];
-                // if (list.length === 0) {
-                //     setList(res.data);
-                // }
-                // else {
-                //     temp = list;
-                //     if (temp.length >= 10) {
-                //         setPage(page + 1);
-                //         temp.push(...res.data);
-                //         setList(temp);
-                //     }
-                // }
             })
             .catch(err => console.log(err))
     }
+
     React.useEffect(() => {
         _getData();
     }, [toggle]);
+
+    const _delData = (uid) => { // 삭제
+        // let url = `${Api.naviReviewDel}${uid}`
+        let url = `${Api.naviReviewDel}1` // 테스트용
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res);
+            alert('삭제완료');
+        })
+        .catch(err=>console.log(err));
+    }
+
+    
 
     const RenderItem = ({ items }) => {
         return <>
@@ -69,7 +71,7 @@ const Product_Review = ({ navigation }) => {
             </View>
             <View>
                 <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ color: 'grey', paddingTop: 10 }}></Text>
+                    <Text style={{ color: 'grey', paddingTop: 10 }}>{items.Content}</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ color: 'grey', paddingTop: 2, flex: 1 }}>수주화원</Text><Text style={{ flex: 5 }}>(주)플로드</Text>
@@ -84,9 +86,9 @@ const Product_Review = ({ navigation }) => {
                 {/* 여기 분기점 */}
                 {toggle === "myreview" ?
                     <View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                            <Pressable onPress={() => Alert.alert("알림", "수정하시겠습니까?", [{ text: "취소" }, { text: "확인", onPress: () => navigation.navigate("ReviewRewrite") }])} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 10, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>수정</Text></Pressable>
-                            <Pressable onPress={() => Alert.alert("알림", "삭제하시겠습니까?", [{ text: "취소" }, { text: "확인", onPress: () => alert("삭제") }])} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 10, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>삭제</Text></Pressable>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                            <Pressable onPress={() => Alert.alert("알림", "수정하시겠습니까?", [{ text: "취소" }, { text: "확인", onPress: () => navigation.navigate("ReviewRewrite", items) }])} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 10, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>수정</Text></Pressable>
+                            <Pressable onPress={() => Alert.alert("알림", "삭제하시겠습니까?", [{ text: "취소" }, { text: "확인", onPress: () => _delData(items.Uid) }])} style={{ backgroundColor: 'rgb(178,171,154)', paddingVertical: 10, paddingHorizontal: 10, marginHorizontal: 5 }}><Text style={{ color: 'white' }}>삭제</Text></Pressable>
                         </View>
                         {items.AContent === null ?
                     null
@@ -152,13 +154,24 @@ const Product_Review = ({ navigation }) => {
         <View style={{ marginHorizontal: 20 }}>
             <View style={{ flexDirection: 'row', marginVertical: 15 }}>
                 <View style={{ flexDirection: 'column' }}>
-                    <View style={{ width: (D_Width * 0.85), height: D_Height * 0.05, flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row' }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'rgb(76,186,181)' }}>{list.length}</Text>
                         <Text style={{ fontWeight: 'bold' }}> 개의 리뷰가 있습니다.</Text>
                     </View>
                 </View>
             </View>
         </View>
+
+        {toggle === 'myreview' && list.length === 0 && (
+            <View>
+                <Text style={styles.text_none_data}>주문내역이 없습니다.</Text>
+            </View>
+        )}
+        {toggle === 'csreview' && list.length === 0 && (
+            <View>
+                <Text style={styles.text_none_data}>리뷰내역이 없습니다.</Text>
+            </View>
+        )}
 
         <FlatList
         style={{paddingHorizontal:20}}
@@ -173,3 +186,12 @@ const Product_Review = ({ navigation }) => {
     </>
 }
 export default Product_Review
+
+
+const styles = StyleSheet.create({
+    text_none_data: {
+        fontSize: 16,
+        alignSelf: 'center',
+        marginVertical: 10
+    }
+})
