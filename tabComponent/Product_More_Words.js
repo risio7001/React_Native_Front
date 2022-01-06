@@ -66,8 +66,8 @@ const Product_More_Words = ({ navigation }) => {
                     "uid": temp
                 }
             })
-            .then(res=>setLoad(!load))
-            .catch(err=>console.log(err));
+                .then(res => setLoad(!load))
+                .catch(err => console.log(err));
             // console.log(temp);
         }
     }
@@ -95,6 +95,7 @@ const Product_More_Words = ({ navigation }) => {
     const changeToggle = () => {
 
         return <>
+            {test.length < 1 && <View style={{ flexDirection: 'row', justifyContent: 'center' }}><Text>등록된 문구가 없습니다.</Text></View>}
             {test.map((item, index) => (
                 <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white', paddingLeft: 10, paddingVertical: 8 }}>
                     <Text style={{ color: 'grey', flex: 1, alignSelf: 'center', paddingRight: 5 }}>{(index + 1)}</Text>
@@ -111,8 +112,6 @@ const Product_More_Words = ({ navigation }) => {
                                 temp = temp.concat(test);
                                 temp.forEach((element) => {
                                     if (element.Text === item.Text) {        // 선택된 element 검증
-                                        // console.log(item.text);
-                                        // console.log(element.text);
                                         return element.check = !element.check;  // 현재 check의 값의 반대값 
                                     }
                                 })
@@ -180,10 +179,7 @@ const Product_More_Words = ({ navigation }) => {
             <Text style={{ color: 'white', flex: 1, alignSelf: 'center', paddingLeft: 10 }}>선택</Text>
         </View>
         <ScrollView>
-            {/* <FlatList
-            data={} */}
             {test === undefined ? null : changeToggle()}
-
         </ScrollView>
         <View style={{ flexDirection: 'row', paddingHorizontal: 10, paddingVertical: 20 }}>
             <Pressable onPress={() => delFunc()} style={{

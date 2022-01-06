@@ -9,7 +9,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 const Product_Out = ({ navigation }) => {
 
-    const [toggle, setToggle] = React.useState('complete');
+    const [toggle, setToggle] = React.useState('ready');
     const [isVisible, setIsVisible] = React.useState(false);
     const [count, setCount] = React.useState([0, 0, 0, 0, 0]);
     const [list, setList] = React.useState([]);
@@ -18,9 +18,14 @@ const Product_Out = ({ navigation }) => {
     
 
     const handleToggle = async (t) => { //  상단 탭으로 바꿧을 경우 
-        setList([]);
-        setToggle(t);
-        setPage(1);
+        if(toggle === t){
+
+        }
+        else{
+            setList([]);
+            setToggle(t);
+            setPage(1);
+        }
     }
 
     const _getData = () => {

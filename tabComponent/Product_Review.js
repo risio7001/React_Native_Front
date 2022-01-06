@@ -16,9 +16,13 @@ const Product_Review = ({ navigation }) => {
     const [list, setList] = React.useState([]);
 
     const handleToggle = (t) => { //  상단 탭으로 바꿧을 경우 
-        setList([]);
-        setToggle(t);
-        setPage(1);
+        if(toggle === t){
+
+        }else{
+            setList([]);
+            setToggle(t);
+            setPage(1);
+        }
     }
 
     const _getData = () => {    // 리스트 가져오기
