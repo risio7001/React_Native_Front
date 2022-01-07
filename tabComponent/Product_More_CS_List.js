@@ -5,6 +5,7 @@ import { D_Height, D_Width } from '../utils/deviceSize';
 import Arrow from '../img/arrow.svg';
 import Notice from '../img/noticeMark.svg';
 import Down from '../img/dropDownBox.svg';
+import { useIsFocused } from '@react-navigation/native';
 
 const Product_More_CS_List = ({ navigation }) => {
 
@@ -12,10 +13,16 @@ const Product_More_CS_List = ({ navigation }) => {
     const [list, setList] = React.useState();
     const [siteid, setSiteid] = React.useState('flda');
     const [userid, setUserid] = React.useState('flroad');
+    const [reLoad, setReLoad] = React.useState(false);
+    const isFocused = useIsFocused();
 
+    React.useEffect(()=>{
+        alert("현재 화면은 테스트용 db 사용중입니다.");
+    },[]);
+    
     React.useEffect(() => {
         dbConn();
-    }, []);
+    }, [isFocused, reLoad]);
 
     const dbConn = () => {
         try {
@@ -35,11 +42,34 @@ const Product_More_CS_List = ({ navigation }) => {
         }
     }
 
+    const delCS = async (num) => {
+        try{
+            let url = `http://localhost:5000/sun/sun/delCS/${num}`
+            fetch(url)
+            .then(res=>res.json())
+            .then(res=>{
+                alert("삭제되었습니다.");
+                setReLoad(!reLoad);
+            })
+            .catch(err=>console.log(err));
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
     const RenderItem = ({ items }) => {
         return <>
             {/* {items.map((item, index) => ( */}
             <View style={{ paddingVertical: 5, paddingHorizontal: 10, backgroundColor: 'white', marginVertical: 10 }}>
-                <Pressable onPress={() => setViewMore(!viewMore)}>
+                <Pressable onPress={() => {
+                    if(viewMore === items.Uid){
+                        setViewMore(null);
+                    }
+                    else{
+                        setViewMore(items.Uid)
+                    }
+                    }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={{ flexDirection: 'row' }}>
                             {items.answer === null ?
@@ -61,7 +91,7 @@ const Product_More_CS_List = ({ navigation }) => {
                             <LocalSvg asset={Down} width={15} height={15} fill={'grey'} />
                         </View>
                     </View>
-                    {viewMore === true ?
+                    {viewMore === items.Uid ?
 
                         <View style={{ marginVertical: 5, paddingVertical: 5, paddingHorizontal: 10 }}>
                             <Text>
@@ -93,7 +123,7 @@ const Product_More_CS_List = ({ navigation }) => {
                 {items.answer === null ?
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                         <Text onPress={() => navigation.navigate('csModify', items)} style={{ color: 'white', paddingHorizontal: 20, paddingVertical: 5, backgroundColor: 'orange', marginHorizontal: 10 }}>수정</Text>
-                        <Text onPress={() => alert('삭제')} style={{ color: 'white', paddingHorizontal: 20, paddingVertical: 5, backgroundColor: 'grey' }}>삭제</Text>
+                        <Text onPress={() => delCS(items.Uid)} style={{ color: 'white', paddingHorizontal: 20, paddingVertical: 5, backgroundColor: 'grey' }}>삭제</Text>
                     </View>
                     :
                     null

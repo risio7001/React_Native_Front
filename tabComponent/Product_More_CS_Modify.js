@@ -48,42 +48,30 @@ const Product_More_CS_Modify = ({ navigation }) => {
     },[]);
 
     const modify = async() =>{
-        console.log(items.Uid)
-        console.log(content);
-        console.log(consultSelect);
-        console.log(subject);
-        console.log(items);
-        // try{
-        //     const result = await axios({
-        //         method:'post',
-        //         url:`http://localhost:5000/sun/sun/csmodify`,
-        //         headers:{
-        //             'Content-Type':'application/json',
-        //             'Accept':'application/json'
-        //         },
-        //         data:{
-        //             "uid":items.Uid,
-        //             "content":content,
-        //             "consult":consultSelect,
-        //             "subject":subject
-        //         }
-        //     })
-
-        //     let url = `http://localhost:5000/sun/sun/csmodify/${Uid}`;
-        //     fetch(url)
-        //     .then(res=>res.json())
-        //     .then(res=>{
-
-        //         console.log(res.data)
-
-        // // alert('문의 수정되었습니다.');
-        // // navigation.goBack();
-        //     })
-        //     .catch(err=>console.log(err))
-
-        // }catch(err){
-        //     console.log(err);
-        // }
+        try{
+            const result = await axios({
+                method:'post',
+                url:`http://localhost:5000/sun/sun/csmodify/${items.Uid}`,
+                headers:{
+                    'Content-Type':'application/json',
+                    'Accept':'application/json'
+                },
+                data:{
+                    "content":content,
+                    "consult":consultSelect,
+                    "subject":subject,
+                    "mobile":items.Mobile,
+                    "email":items.Email
+                }
+            })
+            // console.log(result.data.result);
+            if(result.data.result){
+                alert("수정완료되었습니다.");
+                navigation.navigate("csList");
+            }
+        }catch(err){
+            console.log(err);
+        }
     }
 
     const selectHandler = (d) =>{
