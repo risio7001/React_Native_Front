@@ -57,7 +57,6 @@ const Product_More_CS_List = ({ navigation }) => {
             console.log(err);
         }
     }
-
     const RenderItem = ({ items }) => {
         return <>
             {/* {items.map((item, index) => ( */}
